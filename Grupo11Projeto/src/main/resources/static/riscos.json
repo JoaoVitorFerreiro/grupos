@@ -1,0 +1,642 @@
+{
+  "Trabalho em Altura": {
+    "Queda de altura": {
+      "epis": [
+        "Cinto de segurança tipo paraquedista",
+        "Talabarte de segurança",
+        "Capacete com jugular",
+        "Calçado antiderrapante"
+      ],
+      "medidas": [
+        "Uso de linha de vida ou ponto de ancoragem certificado",
+        "Inspeção dos EPIs antes do uso",
+        "Treinamento específico para trabalho em altura",
+        "Autorização para trabalho (PTP)"
+      ]
+    },
+    "Choque contra estruturas": {
+      "epis": [
+        "Capacete com jugular",
+        "Luvas de proteção",
+        "Vestimenta adequada"
+      ],
+      "medidas": [
+        "Planejamento da movimentação no local de trabalho",
+        "Sinalização de áreas de risco",
+        "Treinamento para movimentação segura"
+      ]
+    },
+    "Queda de materiais sobre pessoas abaixo": {
+      "epis": ["Capacete de segurança", "Calçado de segurança"],
+      "medidas": [
+        "Delimitação da área abaixo do trabalho",
+        "Uso de cinto porta-ferramentas",
+        "Sinalização de risco de queda de materiais"
+      ]
+    },
+    "Choque elétrico": {
+      "epis": ["Luvas isolantes", "Tapete isolante", "Vestimenta antichama"],
+      "medidas": [
+        "Desenergização e bloqueio de circuitos elétricos",
+        "Uso de ferramentas isoladas",
+        "Distância segura de redes energizadas"
+      ]
+    },
+    "Fadiga ou mal-estar do trabalhador": {
+      "epis": ["Roupas leves e confortáveis"],
+      "medidas": [
+        "Intervalos regulares para descanso e hidratação",
+        "Monitoramento das condições de saúde",
+        "Evitar excesso de tempo em altura"
+      ]
+    },
+    "Falha ou uso inadequado dos EPIs": {
+      "epis": ["Equipamentos certificados e adequados"],
+      "medidas": [
+        "Inspeção e manutenção periódica dos EPIs",
+        "Treinamento sobre uso correto",
+        "Fiscalização no local"
+      ]
+    },
+    "Condições climáticas adversas": {
+      "epis": ["Roupas impermeáveis", "Calçados antiderrapantes"],
+      "medidas": [
+        "Monitoramento das condições climáticas",
+        "Suspensão do trabalho em condições perigosas",
+        "Uso de ancoragem reforçada"
+      ]
+    },
+    "Superfícies instáveis ou frágeis": {
+      "epis": [
+        "Cinto de segurança paraquedista",
+        "Talabarte duplo com absorvedor de energia"
+      ],
+      "medidas": [
+        "Inspeção prévia das superfícies",
+        "Uso de escoras e reforços",
+        "Evitar deslocamento sem ancoragem"
+      ]
+    },
+    "Acesso inadequado ao local de trabalho": {
+      "epis": ["Cinto de segurança com talabarte", "Escada de segurança"],
+      "medidas": [
+        "Planejamento seguro da subida/descida",
+        "Uso de escadas e andaimes certificados",
+        "Verificação da estabilidade do acesso"
+      ]
+    },
+    "Falta de ancoragem ou fixação inadequada": {
+      "epis": [
+        "Cinto tipo paraquedista",
+        "Talabarte com absorvedor de impacto"
+      ],
+      "medidas": [
+        "Pontos de ancoragem certificados",
+        "Teste de resistência antes do uso",
+        "Não usar estruturas não seguras"
+      ]
+    }
+  },
+  "Içamento de carga": {
+    "Queda de cargas": {
+      "epis": ["Capacete com jugular", "Bota com biqueira de aço"],
+      "medidas": [
+        "Isolamento da área de içamento",
+        "Sinalização de segurança",
+        "Treinamento específico para amarração de carga"
+      ]
+    },
+    "Sobrecargas": {
+      "epis": ["Luvas de proteção (ao manusear cintas/cabos)", "Capacete"],
+      "medidas": [
+        "Verificação da carga máxima dos equipamentos",
+        "Uso de checklists e planos de içamento",
+        "Supervisão técnica da operação"
+      ]
+    },
+    "Falta de comunicação": {
+      "epis": [
+        "Rádio comunicador",
+        "Coletes reflexivos para identificação visual"
+      ],
+      "medidas": [
+        "Definição de sinais padronizados",
+        "Reunião prévia de alinhamento (briefing)",
+        "Presença de sinalizador (rigger)"
+      ]
+    },
+    "Falhas mecânicas": {
+      "epis": ["Capacete", "Bota de segurança"],
+      "medidas": [
+        "Inspeção preventiva dos equipamentos",
+        "Manutenção periódica conforme manual do fabricante",
+        "Afastamento de pessoas da zona de risco"
+      ]
+    },
+    "Más condições climáticas": {
+      "epis": [
+        "Roupas impermeáveis (em caso de chuva)",
+        "Luvas antiderrapantes"
+      ],
+      "medidas": [
+        "Suspensão da atividade em caso de vento forte, chuva ou baixa visibilidade",
+        "Monitoramento das condições climáticas",
+        "Planejamento do içamento conforme previsão do tempo"
+      ]
+    },
+    "Choque elétrico": {
+      "epis": ["Bota com solado isolante", "Capacete com aba"],
+      "medidas": [
+        "Avaliação prévia da rede elétrica próxima",
+        "Respeito à zona de segurança",
+        "Isolamento ou desligamento da rede (quando possível)"
+      ]
+    },
+    "Queda de pessoas": {
+      "epis": ["Cinturão de segurança com talabarte", "Capacete com jugular"],
+      "medidas": [
+        "Uso de linha de vida ou pontos de ancoragem",
+        "Treinamento em trabalho em altura",
+        "Fiscalização e autorização para acesso em altura"
+      ]
+    },
+    "Ruptura de cabos/cintas": {
+      "epis": ["Luvas de proteção contra abrasão", "Capacete"],
+      "medidas": [
+        "Inspeção visual antes do uso",
+        "Substituição imediata de cintas danificadas",
+        "Uso de equipamentos com certificação"
+      ]
+    },
+    "Carga mal acondicionada ou instável": {
+      "epis": ["Capacete", "Bota de segurança"],
+      "medidas": [
+        "Verificação do centro de gravidade da carga",
+        "Uso correto de acessórios de amarração",
+        "Presença de profissional qualificado na amarração"
+      ]
+    },
+    "Colisão da carga com estruturas": {
+      "epis": ["Capacete", "Colete reflexivo"],
+      "medidas": [
+        "Definição clara de trajeto da carga",
+        "Controle da movimentação com rigger e operador sincronizados",
+        "Sinalização e isolamento da área"
+      ]
+    },
+    "Erro humano": {
+      "epis": ["Depende da tarefa – geralmente capacete e colete reflexivo"],
+      "medidas": [
+        "Treinamento regular da equipe",
+        "Planejamento e simulação de içamento",
+        "Avaliação de competências (reciclagem)"
+      ]
+    },
+    "Trabalho em área não isolada": {
+      "epis": ["Colete reflexivo", "Capacete"],
+      "medidas": [
+        "Isolamento e sinalização do perímetro",
+        "Controle de acesso de pessoas à área de risco",
+        "Comunicação entre equipes no local"
+      ]
+    },
+    "Uso de equipamentos inadequados": {
+      "epis": ["Capacete", "Bota", "Luvas"],
+      "medidas": [
+        "Seleção correta dos equipamentos conforme plano de carga",
+        "Verificação das capacidades nominais (carga segura de trabalho)",
+        "Inspeção de validade e conformidade dos equipamentos"
+      ]
+    }
+  },
+  "Espaço Confinado": {
+    "Falta de oxigênio": {
+      "epis": [
+        "Máscara autônoma ou linha de ar (se necessário)",
+        "Cinto de segurança tipo paraquedista com linha de vida"
+      ],
+      "medidas": [
+        "Detecção e monitoramento contínuo da atmosfera (oxímetro)",
+        "Ventilação mecânica/exaustão forçada",
+        "Entrada somente após emissão da Permissão de Entrada e Trabalho (PET)"
+      ]
+    },
+    "Ruídos": {
+      "epis": [
+        "Protetor auricular tipo plug ou concha (dependendo do nível de decibéis)"
+      ],
+      "medidas": [
+        "Redução na fonte (máquinas silenciosas, manutenção preventiva)",
+        "Isolamento acústico, se possível"
+      ]
+    },
+    "Gases tóxicos ou inflamáveis": {
+      "epis": [
+        "Máscara com filtro químico adequado ou autônoma",
+        "Roupa antichama (se houver risco de inflamáveis)"
+      ],
+      "medidas": [
+        "Detecção com multigás (monitoramento contínuo)",
+        "Ventilação/exaustão adequada",
+        "Proibição de fontes de ignição"
+      ]
+    },
+    "Calor excessivo": {
+      "epis": [
+        "Roupas leves e ventiladas (exceto se houver risco químico)",
+        "Protetor solar (se houver exposição direta)"
+      ],
+      "medidas": [
+        "Ventilação ou refrigeração do ambiente",
+        "Planejamento da atividade nos horários mais frescos",
+        "Pausas regulares e hidratação"
+      ]
+    },
+    "Umidade elevada": {
+      "epis": [
+        "Botas impermeáveis e antiderrapantes",
+        "Roupa impermeável, se necessário"
+      ],
+      "medidas": [
+        "Avaliação do tempo de permanência no local",
+        "Adoção de medidas para evitar escorregamentos"
+      ]
+    },
+    "Riscos biológicos": {
+      "epis": [
+        "Luvas de raspa ou vaqueta",
+        "Perneira",
+        "Máscara (se risco de fezes de animais)"
+      ],
+      "medidas": ["Inspeção prévia do ambiente", "Controle de pragas"]
+    },
+    "Riscos mecânicos": {
+      "epis": [
+        "Cinto de segurança com tripé e trava queda",
+        "Capacete com jugular"
+      ],
+      "medidas": [
+        "Monitoramento de válvulas e sistemas hidráulicos",
+        "Sinalização e isolamento da área",
+        "Plano de emergência e resgate"
+      ]
+    },
+    "Atmosfera explosiva": {
+      "epis": ["Roupa antichama", "Calçado com solado antiestático"],
+      "medidas": [
+        "Aterramento e equipotencialização",
+        "Equipamentos elétricos à prova de explosão (Ex)"
+      ]
+    },
+    "Iluminação inadequada": {
+      "epis": ["Lanterna de cabeça com baterias seladas"],
+      "medidas": [
+        "Iluminação temporária com lanternas ou refletores intrinsecamente seguros"
+      ]
+    },
+    "Risco de quedas": {
+      "epis": ["Cinto tipo paraquedista com talabarte duplo ou trava queda"],
+      "medidas": [
+        "Uso de linha de vida e ancoragem",
+        "Acesso por escada fixa ou plataforma segura"
+      ]
+    },
+    "Choque elétrico": {
+      "epis": ["Luvas isolantes", "Capacete com aba dielétrica"],
+      "medidas": [
+        "Desenergização e bloqueio/etiquetagem (LOTO)",
+        "Afastamento de pontos energizados"
+      ]
+    },
+    "Movimentação de partes mecânicas": {
+      "epis": [
+        "Luvas de proteção mecânica",
+        "Roupas justas (sem partes soltas)"
+      ],
+      "medidas": [
+        "Isolamento das partes móveis",
+        "Bloqueio de acionamentos acidentais"
+      ]
+    },
+    "Estresse térmico": {
+      "epis": [
+        "Camadas respiráveis sob os EPIs principais",
+        "Hidratação constante"
+      ],
+      "medidas": [
+        "Pausas programadas",
+        "Alternância de tarefas",
+        "Ventilação adequada"
+      ]
+    },
+    "Dificuldade de comunicação": {
+      "epis": ["Rádio comunicador fixado no EPI"],
+      "medidas": [
+        "Uso de rádio comunicadores intrinsecamente seguros",
+        "Sistema de sinalização (corda, gestos, alarmes)"
+      ]
+    },
+    "Risco ergonômico": {
+      "epis": ["Joelheiras, cintas lombares (se recomendadas)"],
+      "medidas": [
+        "Ferramentas apropriadas e bem posicionadas",
+        "Planejamento do trabalho em turnos"
+      ]
+    },
+    "Contaminação cruzada": {
+      "epis": [
+        "Roupa de proteção química, se necessário",
+        "Máscara com filtro adequado"
+      ],
+      "medidas": [
+        "Limpeza e inertização do espaço confinado",
+        "Testes de atmosfera antes da entrada"
+      ]
+    }
+  },
+  "Equipamentos móveis": {
+    "Atropelamento": {
+      "epis": ["Colete refletivo", "Botina de segurança com biqueira de aço"],
+      "medidas": [
+        "Delimitação de áreas de circulação de pedestres e veículos",
+        "Uso de sinalização visual e sonora",
+        "Treinamento para operadores e trabalhadores"
+      ]
+    },
+    "Colisão": {
+      "epis": ["Colete refletivo", "Botina de segurança"],
+      "medidas": [
+        "Definição de rotas exclusivas para equipamentos móveis",
+        "Instalação de sensores de proximidade e alarmes sonoros",
+        "Controle de velocidade"
+      ]
+    },
+    "Tombamento": {
+      "epis": ["Cinto de segurança (em cabines)", "Capacete com jugular"],
+      "medidas": [
+        "Inspeção e nivelamento do solo",
+        "Uso de cintos de segurança em cabines",
+        "Restrição de cargas acima da capacidade permitida"
+      ]
+    },
+    "Queda de materiais": {
+      "epis": ["Capacete", "Botina de segurança"],
+      "medidas": [
+        "Amarração adequada da carga",
+        "Uso de barreiras de contenção",
+        "Monitoramento constante do transporte de materiais"
+      ]
+    },
+    "Aprisionamento": {
+      "epis": [
+        "Luvas de segurança adequadas",
+        "Roupas justas (evitar partes soltas que possam prender)"
+      ],
+      "medidas": [
+        "Manutenção preventiva dos equipamentos",
+        "Treinamento para operação segura",
+        "Proibição de operar equipamentos sem qualificação"
+      ]
+    },
+    "Capotamento": {
+      "epis": ["Cinto de segurança (em cabines)", "Capacete com jugular"],
+      "medidas": [
+        "Uso de estrutura de proteção contra capotamento (ROPS)",
+        "Restrição de velocidade em terrenos inclinados",
+        "Treinamento específico para operação segura"
+      ]
+    },
+    "Vibração excessiva": {
+      "epis": ["Luvas antivibração", "Calçado com solado amortecedor"],
+      "medidas": [
+        "Uso de assentos com amortecimento",
+        "Pausas regulares para descanso",
+        "Manutenção dos sistemas de suspensão"
+      ]
+    },
+    "Ruído elevado": {
+      "epis": ["Protetor auricular ou abafador de ruído"],
+      "medidas": [
+        "Isolamento acústico em cabines",
+        "Manutenção dos sistemas de escape dos motores",
+        "Uso de equipamentos silenciosos quando possível"
+      ]
+    },
+    "Inalação de gases e vapores": {
+      "epis": ["Máscara ou respirador adequado para vapores e gases"],
+      "medidas": [
+        "Ventilação adequada em ambientes fechados",
+        "Uso de equipamentos elétricos ou a gás em vez de combustão interna quando possível",
+        "Monitoramento da qualidade do ar"
+      ]
+    },
+    "Falha mecânica": {
+      "epis": ["Luvas de segurança para manutenção", "Óculos de proteção"],
+      "medidas": [
+        "Inspeção e manutenção preventiva",
+        "Uso de checklists diários antes da operação",
+        "Substituição imediata de peças desgastadas"
+      ]
+    },
+    "Risco elétrico": {
+      "epis": ["Luvas isolantes", "Botina com solado isolante"],
+      "medidas": [
+        "Uso de aterramento e isolação adequada",
+        "Desenergização para manutenção",
+        "Inspeção frequente dos componentes elétricos"
+      ]
+    },
+    "Risco ergonômico": {
+      "epis": [
+        "Cinto ergonômico (se necessário)",
+        "Assentos com amortecimento"
+      ],
+      "medidas": [
+        "Ajuste de assentos e controles conforme o operador",
+        "Alternância de tarefas para evitar sobrecarga",
+        "Uso de suportes para coluna e punhos"
+      ]
+    },
+    "Incêndio ou explosão": {
+      "epis": [
+        "Luvas resistentes ao calor",
+        "Roupas anti-chama (se houver risco elevado)"
+      ],
+      "medidas": [
+        "Armazenamento seguro de combustíveis",
+        "Inspeção de vazamentos",
+        "Presença de extintores próximos aos equipamentos"
+      ]
+    },
+    "Contato com partes quentes": {
+      "epis": ["Luvas térmicas", "Mangas longas resistentes ao calor"],
+      "medidas": [
+        "Barreiras de proteção em partes expostas",
+        "Resfriamento adequado antes da manutenção",
+        "Treinamento sobre áreas de risco"
+      ]
+    },
+    "Falta de visibilidade": {
+      "epis": [
+        "Colete refletivo",
+        "Óculos de segurança (se houver poeira ou partículas)"
+      ],
+      "medidas": [
+        "Instalação de espelhos e câmeras nos equipamentos",
+        "Uso de luzes e alarmes sonoros de ré",
+        "Iluminação adequada no ambiente de trabalho"
+      ]
+    }
+  },
+  "Energia Perigosa": {
+    "Elétrica": {
+      "epis": [
+        "Luvas isolantes",
+        "Bota com solado isolante",
+        "Capacete com aba",
+        "Roupas com proteção contra arco elétrico"
+      ],
+      "medidas": [
+        "Bloqueio e etiquetagem (LOTO)",
+        "Teste de ausência de tensão",
+        "Manutenção por eletricistas qualificados",
+        "Isolamento e sinalização da área"
+      ]
+    },
+    "Hidráulica": {
+      "epis": [
+        "Luvas de proteção",
+        "Óculos de segurança",
+        "Bota de PVC ou couro"
+      ],
+      "medidas": [
+        "Alívio de pressão antes da intervenção",
+        "Bloqueio de válvulas e travamento do sistema",
+        "Inspeção de mangueiras e conexões",
+        "Sinalização de sistema pressurizado"
+      ]
+    },
+    "Pneumática": {
+      "epis": ["Óculos de proteção", "Protetor facial", "Luvas de proteção"],
+      "medidas": [
+        "Despressurização completa antes da manutenção",
+        "Bloqueio de válvulas e tubulações",
+        "Manutenção de componentes com certificação",
+        "Uso de mangueiras em boas condições"
+      ]
+    },
+    "Química": {
+      "epis": [
+        "Luvas de borracha nitrílica ou neoprene",
+        "Avental",
+        "Máscara com filtro adequado (ou respirador)",
+        "Óculos ou protetor facial"
+      ],
+      "medidas": [
+        "FISPQ disponível e consultada antes do manuseio",
+        "Contenção e ventilação adequada",
+        "Armazenamento seguro conforme compatibilidade química",
+        "Treinamento em resposta a emergências químicas"
+      ]
+    },
+    "Mecânica": {
+      "epis": [
+        "Luvas (quando apropriadas)",
+        "Roupas ajustadas",
+        "Óculos de proteção",
+        "Capacete"
+      ],
+      "medidas": [
+        "Isolamento de partes móveis",
+        "Uso de protetores de máquinas",
+        "Desligamento e travamento de equipamentos antes de intervenções",
+        "Manutenção apenas por pessoal autorizado"
+      ]
+    },
+    "Térmica": {
+      "epis": [
+        "Luvas térmicas",
+        "Avental aluminizado",
+        "Protetor facial",
+        "Roupas resistentes ao calor",
+        "Óculos de proteção"
+      ],
+      "medidas": [
+        "Isolamento térmico de superfícies quentes",
+        "Sinalização de perigo",
+        "Procedimentos seguros para contato com vapor ou líquidos quentes",
+        "Monitoramento da temperatura em áreas críticas"
+      ]
+    },
+    "Radiação": {
+      "epis": [
+        "Avental de chumbo",
+        "Dosímetro",
+        "Óculos plumbíferos",
+        "Máscara com filtro UV (para solda, por exemplo)"
+      ],
+      "medidas": [
+        "Blindagem da fonte de radiação",
+        "Tempo de exposição mínimo",
+        "Distância segura da fonte",
+        "Autorização específica para acesso"
+      ]
+    },
+    "Gravitacional": {
+      "epis": [
+        "Capacete com jugular",
+        "Bota com biqueira de aço",
+        "Cinto de segurança (quando necessário)"
+      ],
+      "medidas": [
+        "Isolamento da área abaixo da carga",
+        "Fixação segura de objetos em altura",
+        "Proteção contra queda de ferramentas",
+        "Planejamento de içamento e armazenamento seguro em alturas"
+      ]
+    },
+    "Residual": {
+      "epis": [
+        "Variam conforme o tipo de energia acumulada (ex: luvas, óculos, botas)"
+      ],
+      "medidas": [
+        "Verificação e dissipação de energia acumulada (capacitores, molas, cilindros)",
+        "Bloqueio e inspeção antes da liberação",
+        "Treinamento em energia residual",
+        "Uso de procedimentos de verificação de energia zero"
+      ]
+    },
+    "Cinética": {
+      "epis": [
+        "Colete reflexivo",
+        "Capacete",
+        "Bota com biqueira",
+        "Protetor auricular (em áreas com tráfego)"
+      ],
+      "medidas": [
+        "Controle de tráfego interno",
+        "Separação de pedestres e veículos",
+        "Sinalização e iluminação adequada",
+        "Capacitação de operadores de máquinas móveis"
+      ]
+    },
+    "Sonora (ruído)": {
+      "epis": ["Protetores auriculares (tipo concha ou plug)"],
+      "medidas": [
+        "Medição de níveis de ruído",
+        "Isolamento acústico das fontes",
+        "Rotinas de descanso auditivo",
+        "Monitoramento periódico da audição dos trabalhadores"
+      ]
+    },
+    "Lumínica (ofuscamento)": {
+      "epis": ["Máscara de solda", "Óculos com filtro UV", "Viseiras"],
+      "medidas": [
+        "Isolamento da área de solda ou corte",
+        "Sinalização de área com radiação intensa",
+        "Treinamento sobre riscos visuais",
+        "Ajuste adequado dos equipamentos de proteção visual"
+      ]
+    }
+  }
+}

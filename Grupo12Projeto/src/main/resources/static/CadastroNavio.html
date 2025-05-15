@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Navio - Sistema Portuário</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #0077cc;
+        --primary-dark: #005fa3;
+        --secondary-color: #1a3e5c;
+        --light-color: #f0f5f9;
+        --success-color: #2ecc71;
+        --error-color: #e74c3c;
+        --warning-color: #f39c12;
+        --gray-color: #6c757d;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-color);
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background: linear-gradient(to bottom, var(--secondary-color), #0f2027);
+        color: white;
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+      }
+
+      .sidebar-logo {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 10px;
+      }
+
+      .sidebar-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .menu-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .menu-item i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .main-content {
+        flex: 1;
+        margin-left: 250px;
+        padding: 30px;
+      }
+
+      .page-header {
+        margin-bottom: 30px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .page-title i {
+        margin-right: 10px;
+        color: var(--primary-color);
+      }
+
+      .breadcrumb {
+        display: flex;
+        list-style: none;
+        font-size: 14px;
+        color: var(--gray-color);
+      }
+
+      .breadcrumb li:not(:last-child)::after {
+        content: "/";
+        margin: 0 8px;
+      }
+
+      .breadcrumb a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      .card-header {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .card-title {
+        font-size: 18px;
+        color: var(--secondary-color);
+        font-weight: 600;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+
+      .form-group {
+        padding: 0 15px;
+        margin-bottom: 20px;
+        flex: 1 0 50%;
+      }
+
+      @media (max-width: 768px) {
+        .form-group {
+          flex: 1 0 100%;
+        }
+      }
+
+      .form-group.full-width {
+        flex: 1 0 100%;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--secondary-color);
+      }
+
+      .input-group {
+        position: relative;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 15px;
+        top: 14px;
+        color: var(--primary-color);
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: all 0.3s;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.2);
+      }
+
+      .input-help {
+        font-size: 12px;
+        color: var(--gray-color);
+        margin-top: 5px;
+      }
+
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--gray-color);
+        color: var(--gray-color);
+      }
+
+      .btn-outline:hover {
+        background-color: #f8f9fa;
+      }
+
+      .alert {
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .alert-success {
+        background-color: rgba(46, 204, 113, 0.2);
+        border: 1px solid var(--success-color);
+        color: var(--success-color);
+      }
+
+      .alert-error {
+        background-color: rgba(231, 76, 60, 0.2);
+        border: 1px solid var(--error-color);
+        color: var(--error-color);
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        display: none;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(0, 119, 204, 0.2);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        margin-left: 5px;
+        color: var(--gray-color);
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+        font-weight: normal;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .required::after {
+        content: "*";
+        color: var(--error-color);
+        margin-left: 3px;
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          width: 70px;
+          overflow: visible;
+        }
+
+        .sidebar-header {
+          padding: 10px;
+        }
+
+        .sidebar-title,
+        .menu-item span {
+          display: none;
+        }
+
+        .sidebar-logo {
+          width: 40px;
+          height: 40px;
+        }
+
+        .menu-item {
+          padding: 15px;
+          justify-content: center;
+        }
+
+        .menu-item i {
+          margin-right: 0;
+          font-size: 18px;
+        }
+
+        .main-content {
+          margin-left: 70px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .main-content {
+          padding: 15px;
+        }
+
+        .card {
+          padding: 20px;
+        }
+
+        .btn-group {
+          flex-direction: column;
+        }
+
+        .btn {
+          margin-bottom: 10px;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <img src="./navio.png" alt="Logo Porto Santos" class="sidebar-logo" />
+          <div class="sidebar-title">Sistema Portuário</div>
+        </div>
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="./CadastroNavio.html" class="menu-item active">
+            <i class="fas fa-ship"></i>
+            <span>Navios</span>
+          </a>
+          <a href="./CadastroCarga.html" class="menu-item">
+            <i class="fas fa-boxes-stacked"></i>
+            <span>Cargas</span>
+          </a>
+
+          <a href="index.html" class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Sair</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">
+            <i class="fas fa-ship"></i> Cadastro de Navio
+          </h1>
+          <ul class="breadcrumb">
+            <li><a href="dashboard.html">Início</a></li>
+            <li><a href="navios.html">Navios</a></li>
+            <li>Cadastro</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Informações do Navio</h2>
+          </div>
+
+          <div class="alert alert-success" id="alertSuccess">
+            <i class="fas fa-check-circle"></i> Navio cadastrado com sucesso!
+            Redirecionando...
+          </div>
+
+          <div class="alert alert-error" id="alertError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage">Erro ao cadastrar o navio.</span>
+          </div>
+
+          <form id="navioForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome" class="required">Nome do Navio</label>
+                <div class="input-group">
+                  <i class="fas fa-ship"></i>
+                  <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="Ex: MSC Grandiosa"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bandeira" class="required">Bandeira</label>
+                <div class="input-group">
+                  <i class="fas fa-flag"></i>
+                  <input
+                    type="text"
+                    id="bandeira"
+                    name="bandeira"
+                    placeholder="Ex: Brasil"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="companhia" class="required">Companhia</label>
+                <div class="input-group">
+                  <i class="fas fa-building"></i>
+                  <input
+                    type="text"
+                    id="companhia"
+                    name="companhia"
+                    placeholder="Ex: MSC Cruzeiros"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="anoConstrucao" class="required"
+                  >Ano de Construção</label
+                >
+                <div class="input-group">
+                  <i class="fas fa-calendar"></i>
+                  <input
+                    type="number"
+                    id="anoConstrucao"
+                    name="anoConstrucao"
+                    placeholder="Ex: 2010"
+                    required
+                    min="1900"
+                    max="2099"
+                  />
+                </div>
+                <div class="input-help">Ano entre 1900 e o ano atual</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tipo" class="required">Tipo de Navio</label>
+                <div class="input-group">
+                  <i class="fas fa-tags"></i>
+                  <select id="tipo" name="tipo" required>
+                    <option value="" disabled selected>Selecione o tipo</option>
+                    <option value="Porta-Contêineres">Porta-Contêineres</option>
+                    <option value="Graneleiro">Graneleiro</option>
+                    <option value="Petroleiro">Petroleiro</option>
+                    <option value="Cruzeiro">Cruzeiro</option>
+                    <option value="Ro-Ro">Ro-Ro (Roll-on/Roll-off)</option>
+                    <option value="Gaseiro">Gaseiro</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="capacidade" class="required"
+                  >Capacidade (em toneladas)</label
+                >
+                <div class="input-group">
+                  <i class="fas fa-weight-hanging"></i>
+                  <input
+                    type="number"
+                    step="0.1"
+                    id="capacidade"
+                    name="capacidade"
+                    placeholder="Ex: 150000"
+                    required
+                    min="0"
+                  />
+                </div>
+                <div class="input-help">Capacidade total em toneladas</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="comprimento" class="required"
+                  >Comprimento (em metros)</label
+                >
+                <div class="input-group">
+                  <i class="fas fa-ruler-horizontal"></i>
+                  <input
+                    type="number"
+                    step="0.1"
+                    id="comprimento"
+                    name="comprimento"
+                    placeholder="Ex: 300"
+                    required
+                    min="0"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="largura" class="required"
+                  >Largura (em metros)</label
+                >
+                <div class="input-group">
+                  <i class="fas fa-ruler-vertical"></i>
+                  <input
+                    type="number"
+                    step="0.1"
+                    id="largura"
+                    name="largura"
+                    placeholder="Ex: 40"
+                    required
+                    min="0"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="observacoes">Observações</label>
+                <div class="input-group">
+                  <i class="fas fa-comment"></i>
+                  <input
+                    type="text"
+                    id="observacoes"
+                    name="observacoes"
+                    placeholder="Informações adicionais sobre o navio"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline" id="btnCancelar">
+                <i class="fas fa-times"></i> Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary" id="btnSubmit">
+                <i class="fas fa-save"></i> Cadastrar Navio
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Elementos do DOM
+      const navioForm = document.getElementById("navioForm");
+      const btnSubmit = document.getElementById("btnSubmit");
+      const btnCancelar = document.getElementById("btnCancelar");
+      const alertSuccess = document.getElementById("alertSuccess");
+      const alertError = document.getElementById("alertError");
+      const errorMessage = document.getElementById("errorMessage");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+
+      // Definir ano máximo como o ano atual
+      const anoAtual = new Date().getFullYear();
+      document.getElementById("anoConstrucao").max = anoAtual;
+      document.getElementById("anoConstrucao").placeholder = `Ex: ${
+        anoAtual - 10
+      }`;
+
+      // Botão cancelar
+      btnCancelar.addEventListener("click", function () {
+        if (
+          confirm(
+            "Tem certeza que deseja cancelar o cadastro? Todos os dados serão perdidos."
+          )
+        ) {
+          window.location.href = "./dashboard.html";
+        }
+      });
+
+      // Envio do formulário
+      navioForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        // Esconder alertas
+        alertSuccess.style.display = "none";
+        alertError.style.display = "none";
+
+        // Mostrar loading
+        loadingOverlay.style.display = "flex";
+
+        try {
+          // Validar campos antes de enviar
+          const anoConstrucao = parseInt(
+            document.getElementById("anoConstrucao").value
+          );
+          if (anoConstrucao < 1900 || anoConstrucao > anoAtual) {
+            throw new Error(
+              `Ano de construção deve estar entre 1900 e ${anoAtual}`
+            );
+          }
+
+          // Preparar dados para envio
+          const navio = {
+            nome: document.getElementById("nome").value,
+            bandeira: document.getElementById("bandeira").value,
+            companhia: document.getElementById("companhia").value,
+            anoConstrucao: anoConstrucao,
+            comprimento: parseFloat(
+              document.getElementById("comprimento").value
+            ),
+            largura: parseFloat(document.getElementById("largura").value),
+            capacidade: parseFloat(document.getElementById("capacidade").value),
+            tipo: document.getElementById("tipo").value,
+          };
+
+          // Enviar requisição para o backend
+          const response = await fetch("/navios/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(navio),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Erro ao cadastrar navio");
+          }
+
+          // Mostrar mensagem de sucesso
+          alertSuccess.style.display = "block";
+
+          // Limpar formulário
+          navioForm.reset();
+
+          // Redirecionar após 2 segundos
+          setTimeout(() => {
+            window.location.href = "CadastroCarga.html";
+          }, 2000);
+        } catch (error) {
+          console.error("Erro no cadastro:", error);
+          errorMessage.textContent =
+            error.message || "Erro ao cadastrar o navio";
+          alertError.style.display = "block";
+
+          // Rolar até o erro
+          alertError.scrollIntoView({ behavior: "smooth" });
+        } finally {
+          // Esconder loading
+          loadingOverlay.style.display = "none";
+        }
+      });
+
+      // Simulação para demonstração (remover em produção)
+      const simularCadastro = true; // Definir como false em produção
+
+      if (simularCadastro) {
+        navioForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Esconder alertas
+          alertSuccess.style.display = "none";
+          alertError.style.display = "none";
+
+          // Mostrar loading
+          loadingOverlay.style.display = "flex";
+
+          // Simular processamento
+          setTimeout(() => {
+            // Esconder loading
+            loadingOverlay.style.display = "none";
+
+            // Mostrar sucesso
+            alertSuccess.style.display = "block";
+
+            // Redirecionar após 2 segundos
+            setTimeout(() => {
+              window.location.href = "CadastroCarga.html";
+            }, 2000);
+          }, 1500);
+        });
+      }
+    </script>
+  </body>
+</html>

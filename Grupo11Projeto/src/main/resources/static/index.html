@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login e Registro - Sistema de Segurança</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset e configurações base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", "Segoe UI", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(120deg, #2c3e50, #4a69bd);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: #333;
+      }
+
+      /* Container principal */
+      .auth-container {
+        width: 100%;
+        max-width: 1100px;
+        min-height: 600px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: flex;
+        position: relative;
+      }
+
+      /* Efeito de vidro */
+      .auth-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        z-index: -1;
+      }
+
+      /* Lado esquerdo - Imagem/Banner */
+      .auth-banner {
+        flex: 1;
+        background: linear-gradient(135deg, #3498db, #2c3e50);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-banner::before {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: url("https://placehold.co/600x400/2c3e50/ffffff?text=Segurança+do+Trabalho")
+          center/cover;
+        opacity: 0.1;
+        animation: rotate 60s linear infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .banner-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+
+      .banner-logo {
+        font-size: 80px;
+        margin-bottom: 30px;
+        color: #fff;
+      }
+
+      .banner-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .banner-text {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        max-width: 80%;
+      }
+
+      /* Lado direito - Formulários */
+      .auth-forms {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      /* Tabs de navegação */
+      .auth-tabs {
+        display: flex;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #eee;
+      }
+
+      .auth-tab {
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #777;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .auth-tab.active {
+        color: #3498db;
+      }
+
+      .auth-tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #3498db;
+        border-radius: 3px 3px 0 0;
+      }
+
+      /* Formulários */
+      .auth-form {
+        display: none;
+      }
+
+      .auth-form.active {
+        display: block;
+      }
+
+      .form-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #2c3e50;
+      }
+
+      .form-subtitle {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px 15px 15px 45px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #f8f9fa;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus {
+        border-color: #3498db;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        outline: none;
+      }
+
+      .form-icon {
+        position: absolute;
+        left: 15px;
+        top: 42px;
+        color: #aaa;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .form-group:focus-within .form-icon {
+        color: #3498db;
+      }
+
+      /* Grid para formulário de registro */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-grid .form-group.full-width {
+        grid-column: span 2;
+      }
+
+      /* Botões */
+      .form-button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 10px;
+        background: #3498db;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form-button:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      .form-button i {
+        margin-right: 10px;
+      }
+
+      .form-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #777;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+      }
+
+      .form-link:hover {
+        color: #3498db;
+      }
+
+      /* Responsivo */
+      @media (max-width: 992px) {
+        .auth-container {
+          flex-direction: column;
+          max-width: 600px;
+        }
+
+        .auth-banner {
+          padding: 30px;
+          min-height: 200px;
+        }
+
+        .banner-logo {
+          font-size: 50px;
+          margin-bottom: 15px;
+        }
+
+        .banner-title {
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
+
+        .banner-text {
+          font-size: 14px;
+          margin-bottom: 15px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .auth-tabs {
+          flex-direction: column;
+          border-bottom: none;
+        }
+
+        .auth-tab {
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab.active::after {
+          display: none;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-grid .form-group {
+          grid-column: span 1;
+        }
+      }
+
+      /* Scrollbar personalizada */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #3498db;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <!-- Lado esquerdo - Banner -->
+      <div class="auth-banner">
+        <div class="banner-content">
+          <div class="banner-logo">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h1 class="banner-title">Projeto integrador</h1>
+          <p class="banner-text">
+            Gerencie a segurança da sua empresa com eficiência e conformidade
+            com as normas regulamentadoras.
+          </p>
+          <div class="banner-features">
+            <div class="feature">
+              <i class="fas fa-check-circle"></i>
+              <span>Formulários digitais</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-check-circle"></i>
+              <span>Relatórios detalhados</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-check-circle"></i>
+              <span>Conformidade com NRs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado direito - Formulários -->
+      <div class="auth-forms">
+        <!-- Tabs de navegação -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" data-tab="login">Login</div>
+          <div class="auth-tab" data-tab="register">Registro</div>
+        </div>
+
+        <!-- Formulário de Login -->
+        <div class="auth-form active" id="login-form">
+          <h2 class="form-title">Bem-vindo de volta</h2>
+          <p class="form-subtitle">
+            Acesse sua conta para gerenciar a segurança da sua empresa
+          </p>
+
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <i class="fas fa-envelope form-icon"></i>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                class="form-control"
+                placeholder="seu@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="login-senha">Senha</label>
+              <i class="fas fa-lock form-icon"></i>
+              <input
+                type="password"
+                id="login-senha"
+                name="senha"
+                class="form-control"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button type="submit" class="form-button">
+              <i class="fas fa-sign-in-alt"></i>
+              Entrar
+            </button>
+
+            <a href="#" class="form-link">Esqueceu sua senha?</a>
+          </form>
+        </div>
+
+        <!-- Formulário de Registro -->
+        <div class="auth-form" id="register-form">
+          <h2 class="form-title">Crie sua conta</h2>
+          <p class="form-subtitle">
+            Registre sua empresa para começar a usar o sistema
+          </p>
+
+          <form id="registerForm">
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="razao_social">Razão Social</label>
+                <i class="fas fa-building form-icon"></i>
+                <input
+                  type="text"
+                  id="razao_social"
+                  name="razao_social"
+                  class="form-control"
+                  placeholder="Empresa XYZ Ltda"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="ramo_de_atividade">Ramo de Atividade</label>
+                <i class="fas fa-industry form-icon"></i>
+                <input
+                  type="text"
+                  id="ramo_de_atividade"
+                  name="ramo_de_atividade"
+                  class="form-control"
+                  placeholder="Construção Civil"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="data_de_fundacao">Data de Fundação</label>
+                <i class="fas fa-calendar-alt form-icon"></i>
+                <input
+                  type="date"
+                  id="data_de_fundacao"
+                  name="data_de_fundacao"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="cnpj">CNPJ</label>
+                <i class="fas fa-id-card form-icon"></i>
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  class="form-control"
+                  placeholder="00.000.000/0001-00"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <i class="fas fa-phone form-icon"></i>
+                <input
+                  type="tel"
+                  id="telefone"
+                  name="telefone"
+                  class="form-control"
+                  placeholder="(00) 00000-0000"
+                  required
+                />
+              </div>
+
+              <div class="form-group full-width">
+                <label for="endereco">Endereço Comercial</label>
+                <i class="fas fa-map-marker-alt form-icon"></i>
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  class="form-control"
+                  placeholder="Rua Exemplo, 123 - Bairro - Cidade/UF"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <i class="fas fa-envelope form-icon"></i>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="contato@empresa.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="responsavel">Responsável</label>
+                <i class="fas fa-user-tie form-icon"></i>
+                <input
+                  type="text"
+                  id="responsavel"
+                  name="responsavel"
+                  class="form-control"
+                  placeholder="Nome do Responsável"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="senha">Senha</label>
+                <i class="fas fa-lock form-icon"></i>
+                <input
+                  type="password"
+                  id="senha"
+                  name="senha"
+                  class="form-control"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="confirmar-senha">Confirmar Senha</label>
+                <i class="fas fa-lock form-icon"></i>
+                <input
+                  type="password"
+                  id="confirmar-senha"
+                  name="confirmar_senha"
+                  class="form-control"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="form-button">
+              <i class="fas fa-user-plus"></i>
+              Registrar Empresa
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Dados embutidos para garantir que sempre haverá dados disponíveis
+      const dadosRiscosEmbutidos = {
+        "Trabalho em Altura": {
+          "Queda de altura": {
+            epis: [
+              "Cinto de segurança tipo paraquedista",
+              "Talabarte de segurança",
+              "Capacete com jugular",
+              "Calçado antiderrapante",
+            ],
+            medidas: [
+              "Uso de linha de vida ou ponto de ancoragem certificado",
+              "Inspeção dos EPIs antes do uso",
+              "Treinamento específico para trabalho em altura",
+              "Autorização para trabalho (PTP)",
+            ],
+          },
+          // Outros riscos...
+        },
+        "Içamento de carga": {
+          // Dados do içamento...
+        },
+        "Espaço Confinado": {
+          // Dados do espaço confinado...
+        },
+        "Equipamentos móveis": {
+          // Dados de equipamentos móveis...
+        },
+        "Energia Perigosa": {
+          Elétrica: {
+            epis: [
+              "Luvas isolantes",
+              "Bota com solado isolante",
+              "Capacete com aba",
+              "Roupas com proteção contra arco elétrico",
+            ],
+            medidas: [
+              "Bloqueio e etiquetagem (LOTO)",
+              "Teste de ausência de tensão",
+              "Manutenção por eletricistas qualificados",
+              "Isolamento e sinalização da área",
+            ],
+          },
+          Hidráulica: {
+            epis: [
+              "Luvas de proteção",
+              "Óculos de segurança",
+              "Bota de PVC ou couro",
+            ],
+            medidas: [
+              "Alívio de pressão antes da intervenção",
+              "Bloqueio de válvulas e travamento do sistema",
+              "Inspeção de mangueiras e conexões",
+              "Sinalização de sistema pressurizado",
+            ],
+          },
+          // Outros riscos de energia perigosa...
+        },
+      };
+
+      // Inicializa com os dados embutidos para garantir que sempre haverá dados
+      let dadosRiscos = dadosRiscosEmbutidos;
+
+      // Tenta carregar o JSON externo
+      fetch("./riscos.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Falha ao carregar o arquivo JSON");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          dadosRiscos = data;
+          console.log("Dados de riscos carregados com sucesso do arquivo");
+        })
+        .catch((error) => {
+          console.error("Erro ao carregar dados:", error);
+          console.log("Usando dados embutidos como fallback");
+        });
+
+      // Mapeamento entre IDs de checkbox e tipos de trabalho
+      const mapeamentoTipos = {
+        trabalho_em_altura: "altura",
+        espaco_confinado: "espaco-confinado",
+        icamento_de_cargas: "icamento",
+        equipamentos_moveis: "equipamentos-moveis",
+        energias_perigosas: "energia-perigosa",
+      };
+
+      // Mapeamento entre tipos formatados e nomes de atividades
+      const mapeamentoAtividades = {
+        altura: "Trabalho em Altura",
+        "espaco-confinado": "Espaço Confinado",
+        icamento: "Içamento de carga",
+        "equipamentos-moveis": "Equipamentos móveis",
+        "energia-perigosa": "Energia Perigosa",
+      };
+
+      function mostrarRiscos(checkbox, tipo) {
+        console.log(
+          `Mostrando riscos para tipo: ${tipo}, checked: ${checkbox.checked}`
+        );
+        const idRiscos = `riscos-${tipo}`;
+        const riscosElement = document.getElementById(idRiscos);
+
+        if (!riscosElement) {
+          console.error(`Elemento com ID ${idRiscos} não encontrado`);
+          return;
+        }
+
+        if (checkbox.checked) {
+          riscosElement.classList.remove("hidden");
+        } else {
+          riscosElement.classList.add("hidden");
+
+          // Esconde a seção de EPIs quando o tipo de trabalho é desmarcado
+          const episElement = document.getElementById(`epis-${tipo}`);
+          if (episElement) {
+            episElement.classList.add("hidden");
+          }
+        }
+      }
+
+      function mostrarEPIs(atividade) {
+        console.log(`Mostrando EPIs para atividade: ${atividade}`);
+        console.log("Dados disponíveis:", Object.keys(dadosRiscos));
+
+        // Encontra o tipo formatado a partir do nome da atividade
+        let tipoFormatado = "";
+        for (const [tipo, nome] of Object.entries(mapeamentoAtividades)) {
+          if (nome === atividade) {
+            tipoFormatado = tipo;
+            break;
+          }
+        }
+
+        if (!tipoFormatado) {
+          console.error(
+            `Tipo formatado não encontrado para atividade: ${atividade}`
+          );
+          return;
+        }
+
+        console.log(`Tipo formatado: ${tipoFormatado}`);
+
+        const riscosSelecionados = [
+          ...document.querySelectorAll(
+            `#riscos-${tipoFormatado} input:checked`
+          ),
+        ].map((el) => el.value);
+
+        console.log(`Riscos selecionados: ${riscosSelecionados.join(", ")}`);
+
+        const idDetalhes = `detalhes-${tipoFormatado}`;
+        const detalhes = document.getElementById(idDetalhes);
+
+        if (!detalhes) {
+          console.error(`Elemento com ID ${idDetalhes} não encontrado`);
+          return;
+        }
+
+        detalhes.innerHTML = "";
+
+        if (riscosSelecionados.length === 0) {
+          const episElement = document.getElementById(`epis-${tipoFormatado}`);
+          if (episElement) {
+            episElement.classList.add("hidden");
+          }
+          return;
+        }
+
+        // Verifica se os dados da atividade existem
+        if (!dadosRiscos[atividade]) {
+          console.error(`Dados não encontrados para atividade: ${atividade}`);
+          console.log("Dados disponíveis:", Object.keys(dadosRiscos));
+          return;
+        }
+
+        let conteudoGerado = false;
+
+        riscosSelecionados.forEach((risco) => {
+          console.log(
+            `Processando risco: ${risco} para atividade: ${atividade}`
+          );
+
+          if (dadosRiscos[atividade] && dadosRiscos[atividade][risco]) {
+            const info = dadosRiscos[atividade][risco];
+            detalhes.innerHTML += `
+          <div class="mb-3">
+            <h5 class="text-primary"><i class="fas fa-exclamation-circle me-2"></i>${risco}</h5>
+            <p><strong><i class="fas fa-hard-hat me-2"></i>EPIs:</strong> ${info.epis.join(
+              ", "
+            )}</p>
+            <p><strong><i class="fas fa-shield-alt me-2"></i>Medidas de Controle:</strong> ${info.medidas.join(
+              ", "
+            )}</p>
+          </div>
+        `;
+            conteudoGerado = true;
+          } else {
+            console.error(
+              `Informações não encontradas para risco: ${risco} em atividade: ${atividade}`
+            );
+            console.log("Dados da atividade:", dadosRiscos[atividade]);
+          }
+        });
+
+        const episElement = document.getElementById(`epis-${tipoFormatado}`);
+        if (episElement) {
+          if (conteudoGerado) {
+            episElement.classList.remove("hidden");
+          } else {
+            episElement.classList.add("hidden");
+          }
+        }
+      }
+
+      // Resto do código permanece o mesmo...
+      document
+        .getElementById("formulario")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Validação básica
+          const campos = [
+            "nome_dos_trabalhadores",
+            "nome_de_empresa",
+            "setor",
+            "numero_do_ptp",
+            "local_especifico",
+            "endereco_comercial",
+            "hora_inicio",
+            "hora_termino",
+          ];
+
+          let valido = true;
+          campos.forEach((campo) => {
+            const elemento = document.getElementById(campo);
+            if (!elemento.value.trim()) {
+              elemento.style.borderColor = "red";
+              valido = false;
+            } else {
+              elemento.style.borderColor = "#ced4da";
+            }
+          });
+
+          if (!valido) {
+            mostrarAlerta(
+              "Por favor, preencha todos os campos obrigatórios.",
+              "danger"
+            );
+            return;
+          }
+
+          // Verificar se pelo menos um tipo de trabalho foi selecionado
+          const tiposTrabalho = [
+            "trabalho_em_altura",
+            "espaco_confinado",
+            "icamento_de_cargas",
+            "equipamentos_moveis",
+            "energias_perigosas",
+          ];
+
+          const temTipoSelecionado = tiposTrabalho.some(
+            (tipo) =>
+              document.getElementById(tipo) &&
+              document.getElementById(tipo).checked
+          );
+
+          if (!temTipoSelecionado) {
+            mostrarAlerta(
+              "Selecione pelo menos um tipo de trabalho.",
+              "warning"
+            );
+            return;
+          }
+
+          // Simulação de envio bem-sucedido
+          mostrarAlerta(
+            "Formulário enviado com sucesso! Redirecionando...",
+            "success"
+          );
+
+          // Redirecionar após 2 segundos
+          setTimeout(() => {
+            window.location.href = "formularios.html";
+          }, 2000);
+        });
+
+      function mostrarAlerta(mensagem, tipo) {
+        const alertContainer = document.getElementById("alert-container");
+        alertContainer.innerHTML = `
+      <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+        ${mensagem}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `;
+
+        // Scroll para o alerta
+        alertContainer.scrollIntoView({ behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservas - ECO PET</title>
+    <link rel="stylesheet" href="Reserva.css" />
+    <style>
+      .error-message,
+      .success-message {
+        padding: 10px 15px;
+        border-radius: 4px;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      .error-message {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+      }
+
+      .success-message {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body class="reservas-page">
+    <!-- Cabeçalho aprimorado -->
+    <header class="top-header">
+      <div class="container header-container">
+        <div class="logo">
+          <img src="imagens/Logo.png" alt="ECO PET Logo" />
+        </div>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="about_us.html">Sobre</a>
+          <a href="login.html">Login</a>
+          <a href="products.html">Produtos</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Formulário de Reservas estilizado -->
+    <section class="section reservas">
+      <div class="container">
+        <h2>Reserve o Hotelzinho Pet</h2>
+        <form class="reservas-form" id="reservasForm" method="POST">
+          <div class="form-group">
+            <label for="nome-usuario">Seu Nome</label>
+            <input
+              type="text"
+              id="nome-usuario"
+              name="nomeUsuario"
+              placeholder="Digite seu nome"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email-usuario">Seu Email</label>
+            <input
+              type="email"
+              id="email-usuario"
+              name="emailUsuario"
+              placeholder="Digite seu email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="pet-name">Nome do Pet</label>
+            <input
+              type="text"
+              id="pet-name"
+              name="nomeAnimal"
+              placeholder="Digite o nome do seu pet"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="data-entrada">Data de Entrada</label>
+            <input type="date" id="data-entrada" name="dataEntrada" required />
+          </div>
+          <div class="form-group">
+            <label for="data-saida">Data de Saída</label>
+            <input type="date" id="data-saida" name="dataSaida" required />
+          </div>
+          <div class="form-group">
+            <label for="notes">Observações</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="4"
+              placeholder="Alguma necessidade especial?"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn">Reservar Agora</button>
+          <p class="error-message" style="display: none">
+            Erro ao enviar reserva. Tente novamente.
+          </p>
+          <p class="success-message" style="display: none">
+            Reserva realizada com sucesso!
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Rodapé comum -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 ECO PET | Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("reservasForm");
+        const errorMessage = document.querySelector(".error-message");
+        const successMessage = document.querySelector(".success-message");
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        // Texto original do botão
+        const originalButtonText = submitButton.textContent;
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Impede o envio padrão do formulário
+
+          // Esconder mensagens anteriores
+          errorMessage.style.display = "none";
+          successMessage.style.display = "none";
+
+          // Alterar botão para indicar processamento
+          submitButton.disabled = true;
+          submitButton.textContent = "Processando...";
+
+          // Obter dados do formulário
+          const nomeUsuario = document.getElementById("nome-usuario").value;
+          const emailUsuario = document.getElementById("email-usuario").value;
+          const nomeAnimal = document.getElementById("pet-name").value;
+          const dataEntrada = document.getElementById("data-entrada").value;
+          const dataSaida = document.getElementById("data-saida").value;
+
+          // Validar datas
+          const dataEntradaObj = new Date(dataEntrada);
+          const dataSaidaObj = new Date(dataSaida);
+
+          if (dataSaidaObj <= dataEntradaObj) {
+            errorMessage.textContent =
+              "A data de saída deve ser posterior à data de entrada.";
+            errorMessage.style.display = "block";
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+            return;
+          }
+
+          // Criar objeto de reserva
+          const reserva = {
+            nomeUsuario: nomeUsuario,
+            emailUsuario: emailUsuario, // Alterado para minúsculo conforme o modelo
+            nomeAnimal: nomeAnimal,
+            dataEntrada: dataEntrada,
+            dataSaida: dataSaida,
+          };
+
+          console.log("Enviando reserva:", reserva);
+
+          // Enviar requisição para o backend
+          fetch("/reservas/criar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(reserva),
+          })
+            .then((response) => {
+              console.log("Status da resposta:", response.status);
+              if (!response.ok) {
+                return response.text().then((text) => {
+                  console.log("Erro recebido:", text);
+                  throw new Error(text);
+                });
+              }
+              return response.json();
+            })
+            .then((data) => {
+              // Sucesso
+              console.log("Sucesso:", data);
+              successMessage.textContent =
+                "Reserva realizada com sucesso! Um email de confirmação foi enviado.";
+              successMessage.style.display = "block";
+              form.reset();
+
+              // Rolar para a mensagem de sucesso
+              successMessage.scrollIntoView({ behavior: "smooth" });
+
+              // Restaurar botão
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+            })
+            .catch((error) => {
+              // Erro
+              console.error("Erro completo:", error);
+              errorMessage.textContent =
+                "Erro ao enviar reserva: " + error.message;
+              errorMessage.style.display = "block";
+
+              // Rolar para a mensagem de erro
+              errorMessage.scrollIntoView({ behavior: "smooth" });
+
+              // Restaurar botão
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+            });
+        });
+
+        // Definir data mínima como hoje
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("data-entrada").min = today;
+        document.getElementById("data-saida").min = today;
+      });
+    </script>
+  </body>
+</html>

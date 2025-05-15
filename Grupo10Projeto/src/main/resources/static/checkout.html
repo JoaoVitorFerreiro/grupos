@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Marimbondo Rei</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #8b5a2b; /* Marrom escuro */
+        --secondary-color: #d2b48c; /* Marrom claro */
+        --accent-color: #a0522d; /* Marrom médio */
+        --background-color: #f5f5dc; /* Bege claro */
+        --text-color: #3c2f2f; /* Marrom muito escuro */
+        --light-color: #fff8e7; /* Creme claro */
+        --success-color: #4caf50; /* Verde */
+        --error-color: #f44336; /* Vermelho */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 1rem 0;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-family: "Pacifico", cursive;
+        font-size: 2rem;
+        text-decoration: none;
+        color: var(--light-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-icon {
+        font-size: 1.8rem;
+        margin-right: 0.5rem;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 2rem;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--light-color);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: var(--secondary-color);
+      }
+
+      .mobile-menu-icon {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--light-color);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: var(--primary-color);
+        position: relative;
+        font-family: "Pacifico", cursive;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--accent-color);
+      }
+
+      .checkout-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .checkout-form {
+        flex: 1;
+        min-width: 300px;
+        background-color: var(--light-color);
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .checkout-summary {
+        flex: 0 0 350px;
+        background-color: var(--light-color);
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        align-self: flex-start;
+      }
+
+      .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+
+      .form-row {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.8rem;
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin: 0.5rem;
+        border: none;
+        cursor: pointer;
+        width: calc(100% - 1rem);
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .summary-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .summary-item:last-child {
+        border-bottom: none;
+      }
+
+      .summary-item-name {
+        font-weight: 500;
+      }
+
+      .summary-item-price {
+        font-weight: 700;
+        color: var(--accent-color);
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        margin-top: 1rem;
+        border-top: 2px solid var(--secondary-color);
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      .product-size-select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .notification.success {
+        background-color: var(--success-color);
+      }
+
+      .notification.error {
+        background-color: var(--error-color);
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 3rem 0;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 0 2rem;
+      }
+
+      .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+
+      .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--light-color);
+      }
+
+      .footer-section p,
+      .footer-section a {
+        margin-bottom: 0.8rem;
+        color: #ddd;
+        text-decoration: none;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-color);
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icons a {
+        color: var(--light-color);
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: var(--accent-color);
+      }
+
+      .copyright {
+        width: 100%;
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ddd;
+      }
+
+      /* Estilos para o produto no checkout */
+      .product-list {
+        margin-bottom: 1.5rem;
+      }
+
+      .product-item {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background-color: #fff;
+      }
+
+      .product-item-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-name {
+        font-weight: 600;
+      }
+
+      /* Estilos para o modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: var(--light-color);
+        margin: 15% auto;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 500px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: modalopen 0.4s;
+      }
+
+      @keyframes modalopen {
+        from {
+          opacity: 0;
+          transform: translateY(-60px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .close-modal {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        text-align: center;
+      }
+
+      .order-code {
+        font-size: 2rem;
+        text-align: center;
+        margin: 1.5rem 0;
+        color: var(--accent-color);
+        font-weight: 700;
+      }
+
+      /* Estilos para o loader */
+      .loader-container {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--accent-color);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .checkout-container {
+          flex-direction: column;
+        }
+
+        .checkout-summary {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-inner {
+          padding: 1rem;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+
+        .logo {
+          font-size: 1.8rem;
+        }
+
+        nav {
+          display: none;
+          width: 100%;
+          margin-top: 1rem;
+          background-color: var(--primary-color);
+          padding: 1rem 0;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav.active {
+          display: block;
+        }
+
+        nav ul {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul li {
+          margin: 0.8rem 0;
+        }
+
+        nav ul li a {
+          padding: 0.5rem 0;
+          display: block;
+        }
+
+        .mobile-menu-icon {
+          display: block;
+        }
+
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .footer-section {
+          min-width: 100%;
+          text-align: center;
+        }
+
+        .social-icons {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <i class="fas fa-crown logo-icon"></i> Marimbondo Rei
+        </a>
+        <div
+          class="mobile-menu-icon"
+          onclick="toggleMobileMenu()"
+          aria-label="Abrir menu de navegação"
+        >
+          <i class="fas fa-bars"></i>
+        </div>
+        <nav id="navMenu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">Sobre</a></li>
+            <li><a href="index.html#menu">Cardápio</a></li>
+            <li><a href="index.html#contact">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1 class="section-title">Finalizar Pedido</h1>
+
+        <div class="checkout-container">
+          <div class="checkout-form">
+            <h2 class="form-title">Informações do Pedido</h2>
+            <form id="checkoutForm">
+              <div class="form-group">
+                <label for="nomeUsuario">Nome Completo</label>
+                <input
+                  type="text"
+                  id="nomeUsuario"
+                  name="nomeUsuario"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="emailUsuario">Email</label>
+                <input
+                  type="email"
+                  id="emailUsuario"
+                  name="emailUsuario"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="endereco">Endereço de Entrega</label>
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Produtos Selecionados</label>
+                <div id="productList" class="product-list">
+                  <!-- Lista de produtos será adicionada aqui via JavaScript -->
+                </div>
+              </div>
+
+              <input type="hidden" id="produtos" name="produtos" />
+              <input type="hidden" id="valor" name="valor" />
+              <input type="hidden" id="dataPedido" name="dataPedido" />
+              <input type="hidden" id="status" name="status" value="Pendente" />
+
+              <button type="submit" class="btn">Finalizar Compra</button>
+              <a
+                href="index.html"
+                class="btn"
+                style="background-color: var(--primary-color)"
+                >Voltar para Loja</a
+              >
+            </form>
+          </div>
+
+          <div class="checkout-summary">
+            <h2 class="summary-title">Resumo do Pedido</h2>
+            <div id="orderSummary">
+              <!-- Itens do pedido serão adicionados aqui via JavaScript -->
+            </div>
+            <div class="summary-total">
+              <span>Total:</span>
+              <span id="orderTotal">R$ 0,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Marimbondo Rei</h3>
+          <p>Confeitaria & Café desde 1995</p>
+          <p>Av. Marechal Deodoro da Fonseca, 123</p>
+        </div>
+        <div class="footer-section">
+          <h3>Links Rápidos</h3>
+          <a href="index.html">Home</a>
+          <a href="index.html#about">Sobre</a>
+          <a href="index.html#menu">Cardápio</a>
+          <a href="index.html#contact">Contato</a>
+        </div>
+        <div class="footer-section">
+          <h3>Siga-nos</h3>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Marimbondo Rei. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <div class="notification" id="notification"></div>
+
+    <!-- Modal para exibir o código do pedido -->
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title">Pedido Realizado com Sucesso!</h2>
+        <p style="text-align: center">Seu código de pedido é:</p>
+        <div class="order-code" id="orderCode"></div>
+        <p style="text-align: center">
+          Guarde este código para acompanhar seu pedido.
+        </p>
+        <button class="btn" onclick="goToHome()">Voltar para a Loja</button>
+      </div>
+    </div>
+
+    <!-- Loader para processamento do pedido -->
+    <div id="loaderContainer" class="loader-container">
+      <div class="loader"></div>
+    </div>
+
+    <script>
+      // Carregar carrinho do localStorage
+      let cart = [];
+      let total = 0;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        loadCart();
+        setupCheckoutForm();
+
+        // Se o carrinho estiver vazio, redirecionar para a página principal
+        if (cart.length === 0) {
+          showNotification("Seu carrinho está vazio", "error");
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2000);
+        }
+      });
+
+      function toggleMobileMenu() {
+        const nav = document.getElementById("navMenu");
+        nav.classList.toggle("active");
+      }
+
+      function loadCart() {
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+          updateOrderSummary();
+          renderProductList();
+        }
+      }
+
+      function renderProductList() {
+        const productListElement = document.getElementById("productList");
+        productListElement.innerHTML = "";
+
+        if (cart.length === 0) {
+          productListElement.innerHTML = "<p>Nenhum produto selecionado</p>";
+          return;
+        }
+
+        // Criar um elemento para cada produto no carrinho
+        cart.forEach((item, index) => {
+          const productElement = document.createElement("div");
+          productElement.className = "product-item";
+
+          // Determinar se o produto é um bolo (para mostrar opções de tamanho)
+          const isCake = item.id.startsWith("bolo");
+
+          let sizeSelectHtml = "";
+          if (isCake) {
+            sizeSelectHtml = `
+              <div style="margin-top: 0.5rem;">
+                <label for="tamanho-${index}">Tamanho:</label>
+                <select id="tamanho-${index}" class="product-size-select" data-index="${index}">
+                  <option value="Pequeno" ${
+                    item.size === "Pequeno" ? "selected" : ""
+                  }>Pequeno (8-10 pessoas) - R$ 60,00</option>
+                  <option value="Médio" ${
+                    item.size === "Médio" ? "selected" : ""
+                  }>Médio (15-20 pessoas) - R$ 90,00</option>
+                  <option value="Grande" ${
+                    item.size === "Grande" ? "selected" : ""
+                  }>Grande (25-30 pessoas) - R$ 120,00</option>
+                </select>
+              </div>
+            `;
+          }
+
+          productElement.innerHTML = `
+            <div class="product-item-header">
+              <span class="product-name">${item.name}</span>
+              <span>Quantidade: ${item.quantity}</span>
+            </div>
+            <input type="hidden" name="produto-${index}" value="${item.name}">
+            ${sizeSelectHtml}
+          `;
+
+          productListElement.appendChild(productElement);
+        });
+
+        // Adicionar event listeners para os selects de tamanho
+        document.querySelectorAll(".product-size-select").forEach((select) => {
+          select.addEventListener("change", function () {
+            const index = parseInt(this.getAttribute("data-index"));
+            const selectedSize = this.value;
+            updateProductSize(index, selectedSize);
+          });
+        });
+      }
+
+      function updateProductSize(index, size) {
+        if (index >= 0 && index < cart.length) {
+          // Atualizar o tamanho do produto
+          cart[index].size = size;
+
+          // Atualizar o preço baseado no tamanho selecionado
+          if (size === "Pequeno") {
+            cart[index].price = 60.0;
+          } else if (size === "Médio") {
+            cart[index].price = 90.0;
+          } else if (size === "Grande") {
+            cart[index].price = 120.0;
+          }
+
+          // Atualizar o resumo do pedido
+          updateOrderSummary();
+
+          // Atualizar o carrinho no localStorage
+          localStorage.setItem("cart", JSON.stringify(cart));
+        }
+      }
+
+      function updateOrderSummary() {
+        const orderSummaryElement = document.getElementById("orderSummary");
+        const orderTotalElement = document.getElementById("orderTotal");
+
+        // Limpar resumo do pedido
+        orderSummaryElement.innerHTML = "";
+
+        if (cart.length === 0) {
+          orderSummaryElement.innerHTML = "<p>Seu carrinho está vazio</p>";
+          orderTotalElement.textContent = "R$ 0,00";
+          return;
+        }
+
+        // Adicionar itens ao resumo
+        total = 0;
+
+        cart.forEach((item) => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+
+          const summaryItemElement = document.createElement("div");
+          summaryItemElement.className = "summary-item";
+          summaryItemElement.innerHTML = `
+            <div class="summary-item-name">${item.name} x ${item.quantity} ${
+            item.size ? `(${item.size})` : ""
+          }</div>
+            <div class="summary-item-price">R$ ${itemTotal.toFixed(2)}</div>
+          `;
+
+          orderSummaryElement.appendChild(summaryItemElement);
+        });
+
+        // Atualizar total
+        orderTotalElement.textContent = `R$ ${total.toFixed(2)}`;
+
+        // Atualizar valor total no formulário
+        document.getElementById("valor").value = total.toFixed(2);
+      }
+
+      function setupCheckoutForm() {
+        const checkoutForm = document.getElementById("checkoutForm");
+
+        // Configurar envio do formulário
+        checkoutForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Mostrar loader
+          document.getElementById("loaderContainer").style.display = "flex";
+
+          // Definir data do pedido
+          const now = new Date();
+          document.getElementById("dataPedido").value = now.toISOString();
+
+          // Preparar dados dos produtos
+          const produtosData = cart.map((item) => {
+            return {
+              nome: item.name,
+              tamanho: item.size || "Único",
+              quantidade: item.quantity,
+              preco: item.price,
+            };
+          });
+
+          // Armazenar dados dos produtos em formato JSON
+          document.getElementById("produtos").value =
+            JSON.stringify(produtosData);
+
+          // Coletar dados do formulário
+          const formData = {
+            nomeUsuario: document.getElementById("nomeUsuario").value,
+            emailUsuario: document.getElementById("emailUsuario").value,
+            endereco: document.getElementById("endereco").value,
+            produtos: produtosData,
+            valor: parseFloat(document.getElementById("valor").value),
+            dataPedido: document.getElementById("dataPedido").value,
+            status: document.getElementById("status").value,
+          };
+
+          // Simular processamento
+          setTimeout(() => {
+            // Esconder loader
+            document.getElementById("loaderContainer").style.display = "none";
+
+            // Enviar pedido para a API
+            submitOrder(formData);
+          }, 2000);
+        });
+      }
+
+      function submitOrder(orderData) {
+        // Extrair os nomes dos produtos e tamanhos para criar uma string concatenada
+        const produtosNomes = orderData.produtos
+          .map((p) => `${p.nome} (${p.tamanho})`)
+          .join(", ");
+
+        // Criar o objeto de pedido no formato esperado pelo backend
+        const pedidoData = {
+          nomeUsuario: orderData.nomeUsuario,
+          emailUsuario: orderData.emailUsuario,
+          endereco: orderData.endereco,
+          produto: produtosNomes, // Aqui está a correção principal - enviando todos os produtos como uma string
+          valor: orderData.valor,
+          dataPedido: orderData.dataPedido,
+          status: orderData.status,
+        };
+
+        fetch("/pedido", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(pedidoData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Processar resposta
+            showOrderConfirmation(data.id || generateOrderCode());
+            clearCart();
+          })
+          .catch((error) => {
+            console.error("Erro ao enviar pedido:", error);
+            showNotification(
+              "Erro ao processar pedido. Tente novamente.",
+              "error"
+            );
+          });
+
+        showOrderConfirmation(orderCode);
+        clearCart();
+      }
+
+      function generateOrderCode() {
+        // Gerar um código de pedido aleatório
+        const prefix = "MR";
+        const timestamp = new Date().getTime().toString().slice(-6);
+        const random = Math.floor(Math.random() * 1000)
+          .toString()
+          .padStart(3, "0");
+        return `${prefix}${timestamp}${random}`;
+      }
+
+      function showOrderConfirmation(orderCode) {
+        // Exibir o código do pedido no modal
+        document.getElementById("orderCode").textContent = orderCode;
+        document.getElementById("orderModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("orderModal").style.display = "none";
+        goToHome();
+      }
+
+      function goToHome() {
+        window.location.href = "index.html";
+      }
+
+      function clearCart() {
+        cart = [];
+        localStorage.removeItem("cart");
+      }
+
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

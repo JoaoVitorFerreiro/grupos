@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HKCRM2 - Cadastro e Histórico de Compras</title>
+  <link rel="stylesheet" href="minimal.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('chucrute.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    body.dark {
+      background: #181818 url('chucrute.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f1f1f1;
+    }
+    nav { background: #222; color: #fff; padding: 1rem; display: flex; gap: 1rem; }
+    nav.dark, nav.dark a { background: #111 !important; color: #ffd700 !important; }
+    nav a { color: #fff; text-decoration: none; cursor: pointer; }
+    section { display: none; padding: 2rem; max-width: 600px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; margin-top: 2rem; }
+    section.active { display: block; }
+    section.dark { background: rgba(30,30,30,0.97) !important; color: #f1f1f1; }
+    h2 { margin-top: 0; }
+    h2.dark { color: #ffd700 !important; }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    input, button, select { padding: 0.5rem; font-size: 1rem; }
+    input.dark, select.dark, button.dark {
+      background: #222;
+      color: #ffd700;
+      border: 1px solid #ffd700;
+    }
+    input.dark:focus, select.dark:focus {
+      outline: 2px solid #ffd700;
+      border-color: #ffd700;
+    }
+    button.dark {
+      background: #ffd700;
+      color: #222;
+    }
+    button.dark:hover {
+      background: #ffe066;
+      color: #222;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    table.dark, th.dark, td.dark {
+      background: #222 !important;
+      color: #ffd700 !important;
+      border-color: #ffd700 !important;
+    }
+    .hidden { display: none; }
+    .compra-card {
+      background-color: #fff;
+      transition: all 0.3s ease;
+    }
+    .compra-card.dark {
+      background-color: #222;
+      border-color: #ffd700 !important;
+      color: #f1f1f1;
+    }
+    .compra-card table {
+      margin-top: 1rem;
+    }
+    .compra-card table th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+    .compra-card.dark table th {
+      background-color: #333;
+    }
+    .compra-card table td, .compra-card table th {
+      padding: 0.5rem;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    .compra-card.dark table td, .compra-card.dark table th {
+      border-color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a data-target="login">Login</a>
+    <a data-target="cadastro">Cadastro Cliente + Compra</a>
+    <a data-target="historico">Histórico de Compras</a>
+    <a data-target="cadastroProduto">Cadastro de Produto</a>
+    <a data-target="buscaDoce">Buscar Produto</a>
+    <button id="toggleTheme" style="margin-left:auto;">Modo Escuro</button>
+  </nav>
+
+  <section id="login" class="active">
+    <h2>Login</h2>
+    <form id="formLogin">
+      <input type="email" id="loginEmail" placeholder="E-mail" required>
+      <input type="password" id="loginSenha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <div id="loginMsg"></div>
+  </section>
+
+  <section id="cadastro">
+    <h2>Cadastro de Cliente e Compra</h2>
+    <form id="formCadastro">
+      <input type="text" id="nome" placeholder="Nome do Cliente" required>
+      <input type="text" id="email" placeholder="E-mail" required autocomplete="off">
+      <input type="text" id="endereco" placeholder="Endereço">
+      <input type="text" id="telefone" placeholder="Telefone">
+      <h3>Itens da Compra</h3>
+      <div id="itensCompraSelects"></div>
+      <button type="button" id="addDoceSelect">Adicionar Produto</button>
+      <button type="submit">Cadastrar Cliente e Compra</button>
+    </form>
+    <div id="cadastroMsg"></div>
+  </section>
+
+  <section id="cadastroProduto">
+    <h2>Cadastro de Produto</h2>
+    <form id="formCadastroProduto">
+      <input type="text" id="nomeProduto" placeholder="Nome do Produto" required>
+      <input type="number" id="precoProduto" placeholder="Preço (R$)" min="0" step="0.01" required>
+      <button type="submit">Cadastrar Produto</button>
+    </form>
+    <div id="cadastroProdutoMsg"></div>
+  </section>
+
+  <section id="buscaDoce">
+    <h2>Buscar Produto</h2>
+    <form id="formBuscaDoce">
+      <input type="text" id="buscaNomeProduto" placeholder="Nome do Produto">
+      <button type="submit">Buscar</button>
+    </form>
+    <table id="tblProdutos" class="hidden">
+      <thead><tr><th>ID</th><th>Nome</th><th>Preço</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="buscaProdutoMsg"></div>
+  </section>
+
+  <section id="historico">
+    <h2>Histórico de Compras</h2>
+    <form id="formHistorico">
+      <select id="clienteSelect" required><option value="">Selecione o cliente</option></select>
+      <button type="submit">Buscar Compras</button>
+    </form>
+    <div id="historicoCompras"></div>
+    <div id="historicoMsg"></div>
+  </section>
+
+  <script>
+    // Configuração da API
+    const apiUrl = '/doces'; // Removendo o prefixo /api pois não está configurado no backend
+
+    // Navegação
+    document.querySelectorAll('nav a').forEach(link => {
+      link.onclick = () => {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(link.dataset.target).classList.add('active');
+      };
+    });
+
+    // Login de fachada
+    document.getElementById('formLogin').onsubmit = e => {
+      e.preventDefault();
+      document.getElementById('loginMsg').textContent = 'Login de fachada realizado!';
+      // Mostra as outras seções
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById('cadastro').classList.add('active');
+    };
+
+    // --- Cadastro de Produto (geral) ---
+    document.getElementById('formCadastroProduto').onsubmit = async e => {
+      e.preventDefault();
+      const nome = document.getElementById('nomeProduto').value.trim();
+      const preco = parseFloat(document.getElementById('precoProduto').value);
+      const dto = { nome, preco };
+      try {
+        const resp = await fetch('/produtos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dto)
+        });
+        if (!resp.ok) {
+          const error = await resp.text();
+          throw new Error(error);
+        }
+        document.getElementById('cadastroProdutoMsg').textContent = 'Produto cadastrado com sucesso!';
+        document.getElementById('formCadastroProduto').reset();
+      } catch (err) {
+        console.error('Erro:', err);
+        document.getElementById('cadastroProdutoMsg').textContent = 'Erro ao cadastrar produto. Por favor, tente novamente.';
+      }
+    };
+
+    // --- Busca de Produtos ---
+    document.getElementById('formBuscaDoce').onsubmit = async e => {
+      e.preventDefault();
+      const nomeBusca = document.getElementById('buscaNomeProduto').value.trim().toLowerCase();
+      try {
+        const resp = await fetch('/produtos');
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        const produtos = await resp.json();
+        const tbody = document.querySelector('#tblProdutos tbody');
+        tbody.innerHTML = '';
+        let encontrados = 0;
+        produtos.forEach(p => {
+          if (!nomeBusca || p.nome.toLowerCase().includes(nomeBusca)) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${p.id}</td><td>${p.nome}</td><td>R$ ${parseFloat(p.preco).toFixed(2)}</td>`;
+            tbody.appendChild(tr);
+            encontrados++;
+          }
+        });
+        document.getElementById('tblProdutos').classList.toggle('hidden', encontrados === 0);
+        document.getElementById('buscaProdutoMsg').textContent = encontrados ? '' : 'Nenhum produto encontrado.';
+      } catch (err) {
+        console.error('Erro:', err);
+        document.getElementById('buscaProdutoMsg').textContent = 'Erro ao buscar produtos. Por favor, tente novamente.';
+      }
+    };
+
+    // --- Selects dinâmicos de doces no cadastro de compra ---
+    let listaProdutos = [];
+    async function carregarProdutosSelect() {
+      try {
+        const resp = await fetch('/produtos');
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        const data = await resp.json();
+        listaProdutos = Array.isArray(data) ? data : [];
+        atualizarSelectsProdutos();
+      } catch (err) {
+        console.error('Erro ao carregar produtos:', err);
+        document.getElementById('cadastroMsg').textContent = 'Erro ao carregar lista de produtos. Por favor, tente novamente mais tarde.';
+        listaProdutos = [];
+      }
+    }
+    function criarSelectProduto(idx) {
+      const div = document.createElement('div');
+      div.style.display = 'flex';
+      div.style.gap = '0.5rem';
+      const select = document.createElement('select');
+      select.name = 'produtoSelect';
+      
+      if (listaProdutos.length === 0) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = 'Nenhum produto disponível';
+        select.appendChild(opt);
+        select.disabled = true;
+      } else {
+        listaProdutos.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = `${p.nome} - R$${parseFloat(p.preco).toFixed(2)}`;
+          select.appendChild(opt);
+        });
+      }
+
+      const inputQtd = document.createElement('input');
+      inputQtd.type = 'number';
+      inputQtd.min = '1';
+      inputQtd.value = '1';
+      inputQtd.style.width = '60px';
+      inputQtd.placeholder = 'Qtd';
+      
+      const btnRemover = document.createElement('button');
+      btnRemover.type = 'button';
+      btnRemover.textContent = 'Remover';
+      btnRemover.onclick = () => {
+        div.remove();
+      };
+      
+      div.appendChild(select);
+      div.appendChild(inputQtd);
+      div.appendChild(btnRemover);
+      return div;
+    }
+    function atualizarSelectsProdutos() {
+      const container = document.getElementById('itensCompraSelects');
+      container.innerHTML = '';
+      container.appendChild(criarSelectProduto(0));
+    }
+    document.getElementById('addDoceSelect').onclick = () => {
+      document.getElementById('itensCompraSelects').appendChild(criarSelectProduto(Date.now()));
+    };
+    carregarProdutosSelect();
+
+    // Cadastro de cliente + compra
+    document.getElementById('formCadastro').onsubmit = async e => {
+      e.preventDefault();
+      const cliente = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        endereco: document.getElementById('endereco').value,
+        telefone: document.getElementById('telefone').value,
+        senha: '123456' // senha padrão para evitar erro no backend
+      };
+      // Cria cliente
+      let resp = await fetch('/usuarios/criar', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cliente)
+      });
+      if (!resp.ok) {
+        let msg = 'Erro ao cadastrar cliente.';
+        try {
+          const err = await resp.json();
+          if (err && err.message) msg += ' ' + err.message;
+        } catch {}
+        document.getElementById('cadastroMsg').textContent = msg;
+        return;
+      }
+      const criado = await resp.json();
+      // Itens da compra
+      const selects = document.querySelectorAll('#itensCompraSelects select');
+      const inputsQtd = document.querySelectorAll('#itensCompraSelects input[type="number"]');
+      const itens = [];
+      selects.forEach((select, idx) => {
+        const qtd = parseInt(inputsQtd[idx].value);
+        if (qtd > 0) itens.push({ produtoId: parseInt(select.value), quantidade: qtd });
+      });
+      if (itens.length) {
+        resp = await fetch('/compras', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clienteId: criado.id, itens })
+        });
+        if (!resp.ok) { document.getElementById('cadastroMsg').textContent = 'Cliente cadastrado, mas erro ao registrar compra.'; return; }
+        document.getElementById('cadastroMsg').textContent = 'Cliente e compra cadastrados com sucesso!';
+      } else {
+        document.getElementById('cadastroMsg').textContent = 'Cliente cadastrado (sem compra).';
+      }
+      e.target.reset();
+      carregarDocesSelect();
+    };
+
+    // Preencher select de clientes no histórico
+    async function carregarClientes() {
+      try {
+        const resp = await fetch('/usuarios/todos');
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        const data = await resp.json();
+        return Array.isArray(data) ? data : [];
+      } catch (err) {
+        console.error('Erro ao carregar clientes:', err);
+        document.getElementById('historicoMsg').textContent = 'Erro ao carregar lista de clientes. Por favor, tente novamente mais tarde.';
+        return [];
+      }
+    }
+
+    async function preencherClientesHistorico() {
+      try {
+        const clientes = await carregarClientes();
+        const select = document.getElementById('clienteSelect');
+        select.innerHTML = '<option value="">Selecione o cliente</option>';
+        select.disabled = false;
+        
+        if (clientes && clientes.length > 0) {
+          clientes.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.nome} (${c.email})`;
+            select.appendChild(opt);
+          });
+        } else {
+          select.innerHTML = '<option value="">Nenhum cliente encontrado</option>';
+          select.disabled = true;
+        }
+      } catch (err) {
+        console.error('Erro ao preencher select de clientes:', err);
+        const select = document.getElementById('clienteSelect');
+        select.innerHTML = '<option value="">Erro ao carregar clientes</option>';
+        select.disabled = true;
+      }
+    }
+
+    // Carregar clientes ao abrir aba histórico
+    document.querySelector('a[data-target="historico"]').addEventListener('click', preencherClientesHistorico);
+
+    // Histórico de compras
+    document.getElementById('formHistorico').onsubmit = async e => {
+      e.preventDefault();
+      const id = document.getElementById('clienteSelect').value;
+      if (!id) return;
+      
+      try {
+        const resp = await fetch(`/compras/detalhes?clienteId=${id}`);
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        const compras = await resp.json();
+        const container = document.getElementById('historicoCompras');
+        container.innerHTML = '';
+        
+        if (!compras.length) {
+          document.getElementById('historicoMsg').textContent = 'Nenhuma compra encontrada.';
+          return;
+        }
+        
+        document.getElementById('historicoMsg').textContent = '';
+        
+        compras.forEach(compra => {
+          const compraDiv = document.createElement('div');
+          compraDiv.className = 'compra-card';
+          compraDiv.style.marginBottom = '2rem';
+          compraDiv.style.padding = '1rem';
+          compraDiv.style.border = '1px solid #ccc';
+          compraDiv.style.borderRadius = '8px';
+          
+          const header = document.createElement('div');
+          header.style.marginBottom = '1rem';
+          header.innerHTML = `
+            <strong>Compra #${compra.id}</strong><br>
+            Data: ${new Date(compra.dataCompra).toLocaleString()}<br>
+            <strong>Valor Total: R$ ${compra.valorTotal.toFixed(2)}</strong>
+          `;
+          
+          const table = document.createElement('table');
+          table.style.width = '100%';
+          table.style.borderCollapse = 'collapse';
+          table.innerHTML = `
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unit.</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${compra.itens.map(item => `
+                <tr>
+                  <td>${item.nomeProduto}</td>
+                  <td>${item.quantidade}</td>
+                  <td>R$ ${item.precoUnitario.toFixed(2)}</td>
+                  <td>R$ ${item.subtotal.toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          `;
+          
+          compraDiv.appendChild(header);
+          compraDiv.appendChild(table);
+          container.appendChild(compraDiv);
+          
+          if (darkMode) {
+            compraDiv.classList.add('dark');
+          }
+        });
+      } catch (err) {
+        console.error('Erro:', err);
+        document.getElementById('historicoMsg').textContent = 'Erro ao carregar o histórico de compras. Por favor, tente novamente.';
+      }
+    };
+
+    // Alternância de tema
+    const themeBtn = document.getElementById('toggleTheme');
+    let darkMode = false;
+    function setTheme(dark) {
+      darkMode = dark;
+      document.body.classList.toggle('dark', dark);
+      document.querySelectorAll('nav').forEach(e => e.classList.toggle('dark', dark));
+      document.querySelectorAll('section').forEach(e => e.classList.toggle('dark', dark));
+      document.querySelectorAll('h2').forEach(e => e.classList.toggle('dark', dark));
+      document.querySelectorAll('input,select,button').forEach(e => e.classList.toggle('dark', dark));
+      document.querySelectorAll('table,th,td').forEach(e => e.classList.toggle('dark', dark));
+      document.querySelectorAll('.compra-card').forEach(e => e.classList.toggle('dark', dark));
+      themeBtn.textContent = dark ? 'Modo Claro' : 'Modo Escuro';
+    }
+    themeBtn.onclick = () => setTheme(!darkMode);
+  </script>
+</body>
+</html>

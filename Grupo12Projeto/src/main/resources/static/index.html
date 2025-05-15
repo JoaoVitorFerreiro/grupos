@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Portuário - Login e Cadastro</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f5f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .login-image {
+        flex: 1;
+        background-image: url("./porto.webp");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        padding: 2rem;
+      }
+
+      .overlay h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .overlay p {
+        font-size: 1.2rem;
+        text-align: center;
+        max-width: 600px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .form-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        background-color: white;
+        overflow-y: auto;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #555;
+        position: relative;
+      }
+
+      .tab.active {
+        color: #0077cc;
+      }
+
+      .tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #0077cc;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .content-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .content-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #1a3e5c;
+      }
+
+      .description {
+        font-size: 14px;
+        text-align: center;
+        color: #555;
+        margin-bottom: 25px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 15px;
+        top: 43px;
+        color: #0077cc;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #1a3e5c;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: 0.3s;
+        font-size: 15px;
+      }
+
+      input:focus {
+        border-color: #0077cc;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.2);
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .remember-me input {
+        margin-right: 8px;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background-color: #0077cc;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button:hover {
+        background-color: #005fa3;
+      }
+
+      button i {
+        margin-left: 8px;
+      }
+
+      .footer-text {
+        margin-top: 20px;
+        font-size: 14px;
+        text-align: center;
+        color: #555;
+      }
+
+      .footer-text a {
+        color: #0077cc;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .footer-text a:hover {
+        text-decoration: underline;
+      }
+
+      .logo {
+        display: block;
+        margin: 0 auto 20px;
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+      }
+
+      .loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .loading-spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #0077cc;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        display: none;
+      }
+
+      .error-message {
+        color: #e74c3c;
+      }
+
+      .success-message {
+        color: #2ecc71;
+      }
+
+      @media (max-width: 992px) {
+        body {
+          flex-direction: column;
+          overflow-y: auto;
+        }
+
+        .login-image {
+          height: 200px;
+        }
+
+        .form-container {
+          padding: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .content-container {
+          padding: 20px;
+        }
+
+        .overlay h1 {
+          font-size: 1.8rem;
+        }
+
+        .overlay p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-image">
+      <div class="overlay">
+        <h1>Porto de Santos</h1>
+        <p>
+          Plataforma integrada para gerenciamento eficiente de operações
+          portuárias, navios e cargas no maior porto da América Latina.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="content-container">
+        <img src="./navio.png" alt="Logo Sistema Portuário" class="logo" />
+
+        <div class="tabs">
+          <div class="tab active" id="login-tab">Login</div>
+          <div class="tab" id="cadastro-tab">Cadastro</div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="tab-content active" id="login-content">
+          <h2>Acesso ao Sistema</h2>
+          <p class="description">
+            Faça login para gerenciar seus navios, cargas e informações da
+            empresa.
+          </p>
+
+          <form id="loginForm">
+            <div class="input-group">
+              <label for="email-login">E-mail da empresa:</label>
+              <i class="fas fa-envelope"></i>
+              <input
+                type="email"
+                id="email-login"
+                name="email"
+                placeholder="empresa@dominio.com"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="senha-login">Senha:</label>
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                id="senha-login"
+                name="senha"
+                placeholder="Digite sua senha"
+                required
+              />
+            </div>
+
+            <div class="remember-me">
+              <input type="checkbox" id="lembrar" name="lembrar" />
+              <label for="lembrar" style="margin-bottom: 0"
+                >Lembrar meus dados</label
+              >
+            </div>
+
+            <button type="submit">
+              Entrar
+              <i class="fas fa-sign-in-alt"></i>
+            </button>
+
+            <div class="message error-message" id="login-error">
+              Email ou senha incorretos. Por favor, tente novamente.
+            </div>
+
+            <div class="loading" id="login-loading">
+              <div class="loading-spinner"></div>
+              <p>Autenticando...</p>
+            </div>
+          </form>
+
+          <p class="footer-text">
+            Esqueceu sua senha? <a href="#">Recuperar acesso</a>
+          </p>
+        </div>
+
+        <!-- Cadastro Form -->
+        <div class="tab-content" id="cadastro-content">
+          <h2>Cadastro de Empresa</h2>
+          <p class="description">
+            Registre sua empresa para acessar o sistema portuário.
+          </p>
+
+          <form id="cadastroForm">
+            <div class="input-group">
+              <label for="nome">Nome do Responsável:</label>
+              <i class="fas fa-user"></i>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Digite seu nome completo"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="nomeEmpresa">Nome da Empresa:</label>
+              <i class="fas fa-building"></i>
+              <input
+                type="text"
+                id="nomeEmpresa"
+                name="nomeEmpresa"
+                placeholder="Digite o nome da empresa"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="email-cadastro">E-mail:</label>
+              <i class="fas fa-envelope"></i>
+              <input
+                type="email"
+                id="email-cadastro"
+                name="email"
+                placeholder="empresa@dominio.com"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="senha-cadastro">Senha:</label>
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                id="senha-cadastro"
+                name="senha"
+                placeholder="Crie uma senha segura"
+                required
+              />
+            </div>
+
+            <button type="submit">
+              Cadastrar
+              <i class="fas fa-user-plus"></i>
+            </button>
+
+            <div class="message success-message" id="cadastro-success">
+              Cadastro realizado com sucesso! Agora você pode fazer login.
+            </div>
+
+            <div class="message error-message" id="cadastro-error">
+              Erro no cadastro. Por favor, verifique os dados e tente novamente.
+            </div>
+
+            <div class="loading" id="cadastro-loading">
+              <div class="loading-spinner"></div>
+              <p>Processando cadastro...</p>
+            </div>
+          </form>
+
+          <p class="footer-text">
+            Já possui uma conta? <a href="#" id="voltar-login">Faça login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tab switching functionality
+      document
+        .getElementById("login-tab")
+        .addEventListener("click", function () {
+          document.getElementById("login-tab").classList.add("active");
+          document.getElementById("cadastro-tab").classList.remove("active");
+          document.getElementById("login-content").classList.add("active");
+          document
+            .getElementById("cadastro-content")
+            .classList.remove("active");
+        });
+
+      document
+        .getElementById("cadastro-tab")
+        .addEventListener("click", function () {
+          document.getElementById("cadastro-tab").classList.add("active");
+          document.getElementById("login-tab").classList.remove("active");
+          document.getElementById("cadastro-content").classList.add("active");
+          document.getElementById("login-content").classList.remove("active");
+        });
+
+      document
+        .getElementById("voltar-login")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("login-tab").click();
+        });
+
+      // Login form submission
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const email = document.getElementById("email-login").value;
+          const senha = document.getElementById("senha-login").value;
+          const loading = document.getElementById("login-loading");
+          const errorMessage = document.getElementById("login-error");
+
+          // Esconder mensagem de erro se estiver visível
+          errorMessage.style.display = "none";
+
+          // Verificação básica dos campos
+          if (!email || !senha) {
+            errorMessage.textContent = "Por favor, preencha todos os campos!";
+            errorMessage.style.display = "block";
+            return;
+          }
+
+          // Mostrar loading
+          loading.style.display = "block";
+
+          // Preparar dados para envio
+          const dadosLogin = {
+            email: email,
+            senha: senha,
+          };
+
+          // Enviar requisição para o backend
+          fetch("/usuarios/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dadosLogin),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Falha na autenticação");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              // Esconder loading
+              loading.style.display = "none";
+
+              // Redirecionar para a página principal
+              window.location.href = "CadastroNavio.html";
+            })
+            .catch((error) => {
+              // Esconder loading
+              loading.style.display = "none";
+
+              // Mostrar mensagem de erro
+              errorMessage.style.display = "block";
+              console.error("Erro no login:", error);
+            });
+
+          // Código para simulação (remover em produção)
+          setTimeout(() => {
+            loading.style.display = "none";
+            window.location.href = "CadastroNavio.html";
+          }, 2000);
+        });
+
+      // Cadastro form submission
+      document
+        .getElementById("cadastroForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const nome = document.getElementById("nome").value;
+          const nomeEmpresa = document.getElementById("nomeEmpresa").value;
+          const email = document.getElementById("email-cadastro").value;
+          const senha = document.getElementById("senha-cadastro").value;
+          const loading = document.getElementById("cadastro-loading");
+          const successMessage = document.getElementById("cadastro-success");
+          const errorMessage = document.getElementById("cadastro-error");
+
+          // Esconder mensagens
+          successMessage.style.display = "none";
+          errorMessage.style.display = "none";
+
+          // Verificação básica dos campos
+          if (!nome || !nomeEmpresa || !email || !senha) {
+            errorMessage.textContent = "Por favor, preencha todos os campos!";
+            errorMessage.style.display = "block";
+            return;
+          }
+
+          // Mostrar loading
+          loading.style.display = "block";
+
+          // Preparar dados para envio
+          const dadosCadastro = {
+            nome: nome,
+            NomeDaEmpresa: nomeEmpresa,
+            email: email,
+            senha: senha,
+          };
+
+          // Enviar requisição para o backend
+          fetch("/usuarios/criar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dadosCadastro),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Falha no cadastro");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              // Esconder loading
+              loading.style.display = "none";
+
+              // Mostrar mensagem de sucesso
+              successMessage.style.display = "block";
+
+              // Limpar formulário
+              document.getElementById("cadastroForm").reset();
+
+              // Redirecionar para login após 3 segundos
+              setTimeout(() => {
+                document.getElementById("login-tab").click();
+              }, 3000);
+            })
+            .catch((error) => {
+              // Esconder loading
+              loading.style.display = "none";
+
+              // Mostrar mensagem de erro
+              errorMessage.style.display = "block";
+              console.error("Erro no cadastro:", error);
+            });
+
+          // Código para simulação (remover em produção)
+          setTimeout(() => {
+            loading.style.display = "none";
+            successMessage.style.display = "block";
+            document.getElementById("cadastroForm").reset();
+
+            setTimeout(() => {
+              document.getElementById("login-tab").click();
+            }, 3000);
+          }, 2000);
+        });
+    </script>
+  </body>
+</html>

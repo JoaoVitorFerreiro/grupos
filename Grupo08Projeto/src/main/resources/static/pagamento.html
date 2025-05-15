@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finalizar Compra - Tá No Pé</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #ff6b6b;
+        --secondary-color: #4ecdc4;
+        --accent-color: #ffbe0b;
+        --text-color: #2d3436;
+        --light-bg: #f9f9f9;
+        --dark-bg: #2d3436;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header e Navegação */
+      .top-nav {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--primary-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo i {
+        margin-right: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 25px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-links a i {
+        margin-right: 5px;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-color);
+      }
+
+      /* Checkout Container */
+      .checkout-container {
+        display: flex;
+        gap: 30px;
+        margin: 40px 0;
+      }
+
+      @media (max-width: 768px) {
+        .checkout-container {
+          flex-direction: column;
+        }
+      }
+
+      /* Formulários */
+      .checkout-form {
+        flex: 1;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+      }
+
+      .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--text-color);
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .form-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+      }
+
+      .form-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232d3436' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 12px;
+      }
+
+      .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .form-check-input {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .form-check-label {
+        cursor: pointer;
+      }
+
+      /* Resumo do Pedido */
+      .order-summary {
+        width: 350px;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+        align-self: flex-start;
+        position: sticky;
+        top: 100px;
+      }
+
+      @media (max-width: 768px) {
+        .order-summary {
+          width: 100%;
+          position: static;
+        }
+      }
+
+      .summary-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--text-color);
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .summary-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
+
+      .cart-items {
+        margin-bottom: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .cart-item-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+        margin-right: 15px;
+      }
+
+      .cart-item-details {
+        flex-grow: 1;
+      }
+
+      .cart-item-name {
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .cart-item-price {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .cart-item-quantity {
+        color: #777;
+        font-size: 0.9rem;
+      }
+
+      .summary-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .summary-line.total {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #eee;
+      }
+
+      /* Botões */
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #ff5252;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary-color);
+      }
+
+      .btn-secondary:hover {
+        background-color: #3dbeb6;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: var(--text-color);
+        border: 1px solid #ddd;
+      }
+
+      .btn-outline:hover {
+        background-color: #f5f5f5;
+        transform: translateY(-3px);
+      }
+
+      /* Métodos de Pagamento */
+      .payment-methods {
+        margin-top: 20px;
+      }
+
+      .payment-method {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .payment-method:hover {
+        border-color: var(--primary-color);
+      }
+
+      .payment-method.active {
+        border-color: var(--primary-color);
+        background-color: rgba(255, 107, 107, 0.05);
+      }
+
+      .payment-method-radio {
+        margin-right: 15px;
+      }
+
+      .payment-method-icon {
+        margin-right: 15px;
+        font-size: 1.5rem;
+        width: 30px;
+        text-align: center;
+      }
+
+      .payment-method-details {
+        flex-grow: 1;
+      }
+
+      .payment-method-title {
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+
+      .payment-method-description {
+        font-size: 0.9rem;
+        color: #777;
+      }
+
+      /* Alertas e Notificações */
+      .alert {
+        padding: 15px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .alert-icon {
+        margin-right: 15px;
+        font-size: 1.5rem;
+      }
+
+      .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      /* Loader */
+      .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        display: none;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Modal */
+      .modal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .modal-container.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        width: 90%;
+        max-width: 500px;
+        padding: 30px;
+        position: relative;
+        transform: translateY(-50px);
+        transition: all 0.3s ease;
+      }
+
+      .modal-container.active .modal {
+        transform: translateY(0);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        color: #999;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .modal-close:hover {
+        color: var(--primary-color);
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--text-color);
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .modal-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
+
+      .modal-content {
+        margin-bottom: 20px;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--dark-bg);
+        color: white;
+        padding: 60px 0 30px;
+        margin-top: 60px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;
+        height: 2px;
+        background-color: var(--primary-color);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #ddd;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+        color: var(--primary-color);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .social-link:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer-bottom p {
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div class="modal-container" id="success-modal">
+      <div class="modal">
+        <div class="modal-close" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </div>
+        <h2 class="modal-title">Pedido Realizado com Sucesso!</h2>
+        <div class="modal-content">
+          <p>
+            Seu pedido foi processado com sucesso. Agradecemos pela sua compra!
+          </p>
+          <p style="margin-top: 15px">
+            Número do pedido: <strong id="order-number">ORD-12345</strong>
+          </p>
+          <p style="margin-top: 10px">
+            Um e-mail de confirmação foi enviado para o endereço cadastrado.
+          </p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" onclick="closeModal()">Fechar</button>
+          <a href="./index.html" class="btn">Voltar à Loja</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegação -->
+    <nav class="top-nav">
+      <div class="container nav-container">
+        <a href="./index.html" class="logo">
+          <i class="fas fa-shoe-prints"></i> Tá No Pé
+        </a>
+        <div class="nav-links">
+          <a href="./personalização.html"
+            ><i class="fas fa-magic"></i> Personalização</a
+          >
+          <a href="./register.html"
+            ><i class="fas fa-user-plus"></i> Cadastre-se</a
+          >
+          <a href="./login.html"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h1 style="text-align: center; margin: 40px 0 20px">Finalizar Compra</h1>
+
+      <!-- Alerta Informativo -->
+      <div class="alert alert-info">
+        <div class="alert-icon">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div>
+          <strong>Frete Grátis!</strong> Para compras acima de R$ 150,00 em todo
+          o Brasil.
+        </div>
+      </div>
+
+      <div class="checkout-container">
+        <!-- Formulário de Checkout -->
+        <div class="checkout-form">
+          <h2 class="form-title">Dados Pessoais</h2>
+          <div class="form-group">
+            <label for="name" class="form-label">Nome Completo</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              placeholder="Digite seu nome completo"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="Digite seu e-mail"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone" class="form-label">Telefone</label>
+            <input
+              type="tel"
+              id="phone"
+              class="form-control"
+              placeholder="(00) 00000-0000"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="cpf" class="form-label">CPF</label>
+            <input
+              type="text"
+              id="cpf"
+              class="form-control"
+              placeholder="000.000.000-00"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="size" class="form-label">Tamanho</label>
+            <select id="size" class="form-select" required>
+              <option value="">Selecione o tamanho</option>
+              <option value="33/34">33/34</option>
+              <option value="35/36">35/36</option>
+              <option value="37/38">37/38</option>
+              <option value="39/40">39/40</option>
+              <option value="41/42">41/42</option>
+              <option value="43/44">43/44</option>
+            </select>
+          </div>
+
+          <h2 class="form-title" style="margin-top: 40px">
+            Endereço de Entrega
+          </h2>
+          <div class="form-group">
+            <label for="cep" class="form-label">CEP</label>
+            <input
+              type="text"
+              id="cep"
+              class="form-control"
+              placeholder="00000-000"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="address" class="form-label">Endereço</label>
+            <input
+              type="text"
+              id="address"
+              class="form-control"
+              placeholder="Rua, Avenida, etc."
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="number" class="form-label">Número</label>
+            <input
+              type="text"
+              id="number"
+              class="form-control"
+              placeholder="Número"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="complement" class="form-label">Complemento</label>
+            <input
+              type="text"
+              id="complement"
+              class="form-control"
+              placeholder="Apartamento, Bloco, etc. (opcional)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="neighborhood" class="form-label">Bairro</label>
+            <input
+              type="text"
+              id="neighborhood"
+              class="form-control"
+              placeholder="Bairro"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="city" class="form-label">Cidade</label>
+            <input
+              type="text"
+              id="city"
+              class="form-control"
+              placeholder="Cidade"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="state" class="form-label">Estado</label>
+            <select id="state" class="form-select" required>
+              <option value="">Selecione o estado</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
+          </div>
+
+          <h2 class="form-title" style="margin-top: 40px">
+            Forma de Pagamento
+          </h2>
+          <div class="payment-methods">
+            <div class="payment-method" onclick="selectPaymentMethod('credit')">
+              <input
+                type="radio"
+                name="payment"
+                id="credit"
+                class="payment-method-radio"
+                value="credit"
+              />
+              <div class="payment-method-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="payment-method-details">
+                <div class="payment-method-title">Cartão de Crédito</div>
+                <div class="payment-method-description">
+                  Visa, Mastercard, Elo, American Express
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-method" onclick="selectPaymentMethod('debit')">
+              <input
+                type="radio"
+                name="payment"
+                id="debit"
+                class="payment-method-radio"
+                value="debit"
+              />
+              <div class="payment-method-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="payment-method-details">
+                <div class="payment-method-title">Cartão de Débito</div>
+                <div class="payment-method-description">
+                  Visa, Mastercard, Elo
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-method" onclick="selectPaymentMethod('pix')">
+              <input
+                type="radio"
+                name="payment"
+                id="pix"
+                class="payment-method-radio"
+                value="pix"
+              />
+              <div class="payment-method-icon">
+                <i class="fas fa-qrcode"></i>
+              </div>
+              <div class="payment-method-details">
+                <div class="payment-method-title">Pix</div>
+                <div class="payment-method-description">
+                  Pagamento instantâneo
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-method" onclick="selectPaymentMethod('boleto')">
+              <input
+                type="radio"
+                name="payment"
+                id="boleto"
+                class="payment-method-radio"
+                value="boleto"
+              />
+              <div class="payment-method-icon">
+                <i class="fas fa-barcode"></i>
+              </div>
+              <div class="payment-method-details">
+                <div class="payment-method-title">Boleto Bancário</div>
+                <div class="payment-method-description">
+                  Prazo de compensação de até 3 dias úteis
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campos de Cartão de Crédito (exibidos apenas quando cartão de crédito é selecionado) -->
+          <div id="credit-card-fields" style="display: none; margin-top: 20px">
+            <div class="form-group">
+              <label for="card-number" class="form-label"
+                >Número do Cartão</label
+              >
+              <input
+                type="text"
+                id="card-number"
+                class="form-control"
+                placeholder="0000 0000 0000 0000"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="card-name" class="form-label">Nome no Cartão</label>
+              <input
+                type="text"
+                id="card-name"
+                class="form-control"
+                placeholder="Nome como está no cartão"
+              />
+            </div>
+
+            <div style="display: flex; gap: 15px">
+              <div class="form-group" style="flex: 1">
+                <label for="card-expiry" class="form-label">Validade</label>
+                <input
+                  type="text"
+                  id="card-expiry"
+                  class="form-control"
+                  placeholder="MM/AA"
+                />
+              </div>
+
+              <div class="form-group" style="flex: 1">
+                <label for="card-cvv" class="form-label">CVV</label>
+                <input
+                  type="text"
+                  id="card-cvv"
+                  class="form-control"
+                  placeholder="123"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="card-installments" class="form-label">Parcelas</label>
+              <select id="card-installments" class="form-select">
+                <option value="1">1x sem juros</option>
+                <option value="2">2x sem juros</option>
+                <option value="3">3x sem juros</option>
+                <option value="4">4x sem juros</option>
+                <option value="5">5x sem juros</option>
+                <option value="6">6x sem juros</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 30px">
+            <button
+              type="button"
+              class="btn btn-block"
+              id="finish-order-btn"
+              onclick="finishOrder()"
+            >
+              Finalizar Pedido
+            </button>
+            <a
+              href="./index.html"
+              class="btn btn-outline btn-block"
+              style="margin-top: 15px"
+              >Voltar às Compras</a
+            >
+          </div>
+        </div>
+
+        <!-- Resumo do Pedido -->
+        <div class="order-summary">
+          <h2 class="summary-title">Resumo do Pedido</h2>
+
+          <div class="cart-items" id="cart-items">
+            <!-- Itens do carrinho serão adicionados aqui via JavaScript -->
+          </div>
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="subtotal">R$ 0,00</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Frete</span>
+            <span id="shipping">R$ 0,00</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Desconto</span>
+            <span id="discount">-R$ 0,00</span>
+          </div>
+
+          <div class="summary-line total">
+            <span>Total</span>
+            <span id="total">R$ 0,00</span>
+          </div>
+
+          <div style="margin-top: 20px">
+            <div class="form-group">
+              <label for="coupon" class="form-label">Cupom de Desconto</label>
+              <div style="display: flex">
+                <input
+                  type="text"
+                  id="coupon"
+                  class="form-control"
+                  placeholder="Digite seu cupom"
+                  style="border-radius: 8px 0 0 8px"
+                />
+                <button
+                  type="button"
+                  class="btn"
+                  style="border-radius: 0 8px 8px 0; padding: 12px 15px"
+                  onclick="applyCoupon()"
+                >
+                  Aplicar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Tá No Pé</h3>
+            <p style="color: #ddd; margin-bottom: 20px">
+              Chinelos personalizados com estilo e conforto para todos os
+              momentos.
+            </p>
+            <div class="social-links">
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                class="social-link"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/tanope_013"
+                target="_blank"
+                class="social-link"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a
+                href="https://www.twitter.com"
+                target="_blank"
+                class="social-link"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="https://www.whatsapp.com"
+                target="_blank"
+                class="social-link"
+                ><i class="fab fa-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3>Links Rápidos</h3>
+            <ul class="footer-links">
+              <li><a href="./index.html">Início</a></li>
+              <li><a href="./personalização.html">Personalização</a></li>
+              <li><a href="#">Coleções</a></li>
+              <li><a href="#">Sobre Nós</a></li>
+              <li><a href="#">Contato</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3>Categorias</h3>
+            <ul class="footer-links">
+              <li><a href="#">Feminino</a></li>
+              <li><a href="#">Masculino</a></li>
+              <li><a href="#">Infantil</a></li>
+              <li><a href="#">Personalizados</a></li>
+              <li><a href="#">Promoções</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3>Atendimento</h3>
+            <ul class="footer-links">
+              <li>
+                <i class="fas fa-phone" style="margin-right: 10px"></i> (13)
+                99999-9999
+              </li>
+              <li>
+                <i class="fas fa-envelope" style="margin-right: 10px"></i>
+                contato@tanope.com.br
+              </li>
+              <li>
+                <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
+                Santos, SP
+              </li>
+              <li>
+                <i class="fas fa-clock" style="margin-right: 10px"></i> Seg-Sex:
+                9h às 18h
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Tá No Pé - Todos os direitos reservados</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Variáveis globais
+      let cart = [];
+      let subtotal = 0;
+      let shipping = 0;
+      let discount = 0;
+      let total = 0;
+      let selectedPaymentMethod = "";
+
+      // Carregar carrinho do localStorage
+      window.onload = function () {
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+          updateOrderSummary();
+        } else {
+          // Se não houver itens no carrinho, redirecionar para a página inicial
+          alert(
+            "Seu carrinho está vazio. Adicione produtos antes de finalizar a compra."
+          );
+          window.location.href = "./index.html";
+        }
+      };
+
+      // Atualizar resumo do pedido
+      function updateOrderSummary() {
+        const cartItemsContainer = document.getElementById("cart-items");
+        cartItemsContainer.innerHTML = "";
+
+        // Calcular subtotal
+        subtotal = 0;
+        cart.forEach((item) => {
+          const quantity = item.quantity || 1;
+          subtotal += item.price * quantity;
+
+          // Criar elemento de item do carrinho
+          const cartItem = document.createElement("div");
+          cartItem.className = "cart-item";
+          cartItem.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-quantity">Qtd: ${quantity}</div>
+            <div class="cart-item-price">R$ ${(item.price * quantity).toFixed(
+              2
+            )}</div>
+          </div>
+        `;
+          cartItemsContainer.appendChild(cartItem);
+        });
+
+        // Calcular frete (grátis para compras acima de R$ 150)
+        shipping = subtotal >= 150 ? 0 : 15.9;
+
+        // Calcular total
+        total = subtotal + shipping - discount;
+
+        // Atualizar valores na tela
+        document.getElementById(
+          "subtotal"
+        ).textContent = `R$ ${subtotal.toFixed(2)}`;
+        document.getElementById("shipping").textContent =
+          shipping === 0 ? "Grátis" : `R$ ${shipping.toFixed(2)}`;
+        document.getElementById(
+          "discount"
+        ).textContent = `-R$ ${discount.toFixed(2)}`;
+        document.getElementById("total").textContent = `R$ ${total.toFixed(2)}`;
+      }
+
+      // Selecionar método de pagamento
+      function selectPaymentMethod(method) {
+        selectedPaymentMethod = method;
+
+        // Marcar o radio button correspondente
+        document.getElementById(method).checked = true;
+
+        // Remover classe active de todos os métodos
+        document.querySelectorAll(".payment-method").forEach((el) => {
+          el.classList.remove("active");
+        });
+
+        // Adicionar classe active ao método selecionado
+        document
+          .getElementById(method)
+          .closest(".payment-method")
+          .classList.add("active");
+
+        // Mostrar ou esconder campos de cartão de crédito
+        const creditCardFields = document.getElementById("credit-card-fields");
+        if (method === "credit") {
+          creditCardFields.style.display = "block";
+        } else {
+          creditCardFields.style.display = "none";
+        }
+      }
+
+      // Aplicar cupom de desconto
+      function applyCoupon() {
+        const couponCode = document
+          .getElementById("coupon")
+          .value.trim()
+          .toUpperCase();
+
+        if (couponCode === "TANOPE20") {
+          // Aplicar 20% de desconto
+          discount = subtotal * 0.2;
+          alert("Cupom aplicado com sucesso! 20% de desconto.");
+        } else if (couponCode === "FRETE") {
+          // Frete grátis
+          shipping = 0;
+          discount = 15.9; // Valor do frete
+          alert("Cupom aplicado com sucesso! Frete grátis.");
+        } else if (couponCode === "") {
+          alert("Por favor, digite um cupom.");
+          return;
+        } else {
+          alert("Cupom inválido ou expirado.");
+          return;
+        }
+
+        // Atualizar total
+        total = subtotal + shipping - discount;
+
+        // Atualizar valores na tela
+        document.getElementById("shipping").textContent =
+          shipping === 0 ? "Grátis" : `R$ ${shipping.toFixed(2)}`;
+        document.getElementById(
+          "discount"
+        ).textContent = `-R$ ${discount.toFixed(2)}`;
+        document.getElementById("total").textContent = `R$ ${total.toFixed(2)}`;
+      }
+
+      // Finalizar pedido
+      function finishOrder() {
+        // Validar campos obrigatórios
+        const requiredFields = [
+          { id: "name", label: "Nome Completo" },
+          { id: "email", label: "E-mail" },
+          { id: "phone", label: "Telefone" },
+          { id: "cpf", label: "CPF" },
+          { id: "size", label: "Tamanho" },
+          { id: "cep", label: "CEP" },
+          { id: "address", label: "Endereço" },
+          { id: "number", label: "Número" },
+          { id: "neighborhood", label: "Bairro" },
+          { id: "city", label: "Cidade" },
+          { id: "state", label: "Estado" },
+        ];
+
+        for (const field of requiredFields) {
+          const element = document.getElementById(field.id);
+          if (!element.value.trim()) {
+            alert(`Por favor, preencha o campo ${field.label}.`);
+            element.focus();
+            return;
+          }
+        }
+
+        // Validar método de pagamento
+        if (!selectedPaymentMethod) {
+          alert("Por favor, selecione uma forma de pagamento.");
+          return;
+        }
+
+        // Validar campos de cartão de crédito se for o método selecionado
+        if (selectedPaymentMethod === "credit") {
+          const creditCardFields = [
+            { id: "card-number", label: "Número do Cartão" },
+            { id: "card-name", label: "Nome no Cartão" },
+            { id: "card-expiry", label: "Validade" },
+            { id: "card-cvv", label: "CVV" },
+          ];
+
+          for (const field of creditCardFields) {
+            const element = document.getElementById(field.id);
+            if (!element.value.trim()) {
+              alert(`Por favor, preencha o campo ${field.label}.`);
+              element.focus();
+              return;
+            }
+          }
+        }
+
+        // Mostrar loader
+        document.getElementById("loader").style.display = "flex";
+
+        // Desabilitar botão para evitar múltiplos cliques
+        document.getElementById("finish-order-btn").disabled = true;
+
+        // Preparar dados do pedido
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const size = document.getElementById("size").value;
+        const address = `${document.getElementById("address").value}, ${
+          document.getElementById("number").value
+        } - ${document.getElementById("neighborhood").value}, ${
+          document.getElementById("city").value
+        } - ${document.getElementById("state").value}, ${
+          document.getElementById("cep").value
+        }`;
+
+        // Criar string com os produtos
+        let produtos = "";
+        cart.forEach((item) => {
+          const quantity = item.quantity || 1;
+          produtos += `${item.name} (Tamanho: ${size}, Qtd: ${quantity}), `;
+        });
+        produtos = produtos.slice(0, -2); // Remover a última vírgula e espaço
+
+        // Criar objeto de pedido
+        const pedido = {
+          endereco: address,
+          valor: total,
+          dataPedido: new Date().toISOString(),
+          status: "PENDENTE",
+          nomeUsuario: name,
+          emailUsuario: email,
+          produto: produtos,
+        };
+
+        // Enviar pedido para a API
+        fetch("/pedido", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(pedido),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao processar o pedido");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Exibir modal de sucesso
+            document.getElementById("order-number").textContent =
+              data.id || "ORD-" + Math.floor(Math.random() * 1000000);
+            document.getElementById("success-modal").classList.add("active");
+
+            // Limpar carrinho
+            localStorage.removeItem("cart");
+          })
+          .catch((error) => {
+            console.error("Erro:", error);
+
+            // Simular sucesso para fins de demonstração (remover em produção)
+            simulateSuccess();
+          })
+          .finally(() => {
+            // Esconder loader
+            document.getElementById("loader").style.display = "none";
+
+            // Reabilitar botão
+            document.getElementById("finish-order-btn").disabled = false;
+          });
+      }
+
+      // Função para simular sucesso (apenas para demonstração)
+      function simulateSuccess() {
+        // Gerar ID de pedido fictício
+        const fakeOrderId = "ORD-" + Math.floor(Math.random() * 1000000);
+
+        // Exibir modal de sucesso
+        document.getElementById("order-number").textContent = fakeOrderId;
+        document.getElementById("success-modal").classList.add("active");
+
+        // Limpar carrinho
+        localStorage.removeItem("cart");
+      }
+
+      // Fechar modal
+      function closeModal() {
+        document.getElementById("success-modal").classList.remove("active");
+        window.location.href = "./index.html";
+      }
+
+      // Máscaras para campos
+      document.getElementById("phone").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length > 2) {
+          value = "(" + value.substring(0, 2) + ") " + value.substring(2);
+        }
+        if (value.length > 10) {
+          value = value.substring(0, 10) + "-" + value.substring(10);
+        }
+
+        e.target.value = value;
+      });
+
+      document.getElementById("cpf").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length > 3) {
+          value = value.substring(0, 3) + "." + value.substring(3);
+        }
+        if (value.length > 7) {
+          value = value.substring(0, 7) + "." + value.substring(7);
+        }
+        if (value.length > 11) {
+          value = value.substring(0, 11) + "-" + value.substring(11);
+        }
+
+        e.target.value = value;
+      });
+
+      document.getElementById("cep").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 8) value = value.slice(0, 8);
+
+        if (value.length > 5) {
+          value = value.substring(0, 5) + "-" + value.substring(5);
+        }
+
+        e.target.value = value;
+      });
+
+      document
+        .getElementById("card-number")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 16) value = value.slice(0, 16);
+
+          let formattedValue = "";
+          for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) {
+              formattedValue += " ";
+            }
+            formattedValue += value[i];
+          }
+
+          e.target.value = formattedValue;
+        });
+
+      document
+        .getElementById("card-expiry")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 4) value = value.slice(0, 4);
+
+          if (value.length > 2) {
+            value = value.substring(0, 2) + "/" + value.substring(2);
+          }
+
+          e.target.value = value;
+        });
+
+      document
+        .getElementById("card-cvv")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 3) value = value.slice(0, 3);
+
+          e.target.value = value;
+        });
+
+      // Buscar endereço pelo CEP
+      document.getElementById("cep").addEventListener("blur", function () {
+        const cep = this.value.replace(/\D/g, "");
+
+        if (cep.length !== 8) return;
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (!data.erro) {
+              document.getElementById("address").value = data.logradouro;
+              document.getElementById("neighborhood").value = data.bairro;
+              document.getElementById("city").value = data.localidade;
+              document.getElementById("state").value = data.uf;
+              document.getElementById("number").focus();
+            }
+          })
+          .catch((error) => console.error("Erro ao buscar CEP:", error));
+      });
+    </script>
+  </body>
+</html>

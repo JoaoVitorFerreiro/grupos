@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marimbondo Rei - Confeitaria & Café</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #8b5a2b; /* Marrom escuro */
+        --secondary-color: #d2b48c; /* Marrom claro */
+        --accent-color: #a0522d; /* Marrom médio */
+        --background-color: #f5f5dc; /* Bege claro */
+        --text-color: #3c2f2f; /* Marrom muito escuro */
+        --light-color: #fff8e7; /* Creme claro */
+        --success-color: #4caf50; /* Verde */
+        --error-color: #f44336; /* Vermelho */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", Arial, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-family: "Pacifico", cursive;
+        font-size: 2rem;
+        text-decoration: none;
+        color: var(--light-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-icon {
+        font-size: 1.8rem;
+        margin-right: 0.5rem;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 2rem;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--light-color);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: var(--secondary-color);
+      }
+
+      .mobile-menu-icon {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--light-color);
+      }
+
+      .hero {
+        height: 70vh;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+          ),
+          url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light-color);
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 900px;
+        padding: 2rem;
+        z-index: 1;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        font-family: "Pacifico", cursive;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.8rem;
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin: 0.5rem;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      section {
+        padding: 5rem 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: var(--primary-color);
+        position: relative;
+        font-family: "Pacifico", cursive;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--accent-color);
+      }
+
+      .about {
+        background-color: var(--light-color);
+      }
+
+      .about-content {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .about-img {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-img img {
+        width: 100%;
+        display: block;
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .about-text p {
+        margin-bottom: 1.5rem;
+      }
+
+      .menu {
+        background-color: var(--background-color);
+      }
+
+      .menu-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .menu-tab {
+        padding: 0.8rem 1.5rem;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        border-bottom: 3px solid transparent;
+      }
+
+      .menu-tab.active {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--accent-color);
+      }
+
+      .menu-tab:hover {
+        color: var(--primary-color);
+      }
+
+      .menu-items-container {
+        display: none;
+      }
+
+      .menu-items-container.active {
+        display: block;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .product-card {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
+      }
+
+      .product-info {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+      }
+
+      .product-description {
+        color: #666;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        flex-grow: 1;
+      }
+
+      .product-price {
+        font-weight: 700;
+        color: var(--accent-color);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .add-to-cart-btn {
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        border: none;
+        padding: 0.8rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        width: 100%;
+        text-align: center;
+      }
+
+      .add-to-cart-btn:hover {
+        background-color: var(--primary-color);
+      }
+
+      .buy-now-btn {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        border: none;
+        padding: 0.8rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-top: 0.5rem;
+        width: 100%;
+        text-align: center;
+      }
+
+      .buy-now-btn:hover {
+        background-color: var(--accent-color);
+        transform: translateY(-2px);
+      }
+
+      .cake-sizes {
+        margin-bottom: 2rem;
+        background-color: var(--light-color);
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .cake-sizes h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .size-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .size-table th,
+      .size-table td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      .size-table th {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+      }
+
+      .contact {
+        background-color: var(--light-color);
+      }
+
+      .contact-content {
+        display: flex;
+        gap: 3rem;
+      }
+
+      .contact-info {
+        flex: 1;
+      }
+
+      .contact-info h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      .contact-info p {
+        margin-bottom: 1rem;
+      }
+
+      .contact-info .contact-detail {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .contact-info .contact-detail i {
+        margin-right: 1rem;
+        color: var(--accent-color);
+        font-size: 1.2rem;
+      }
+
+      .contact-form {
+        flex: 1;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      textarea.form-control {
+        height: 150px;
+        resize: vertical;
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 0 2rem;
+      }
+
+      .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+
+      .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--light-color);
+      }
+
+      .footer-section p,
+      .footer-section a {
+        margin-bottom: 0.8rem;
+        color: #ddd;
+        text-decoration: none;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-color);
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icons a {
+        color: var(--light-color);
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: var(--accent-color);
+      }
+
+      .copyright {
+        width: 100%;
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ddd;
+      }
+
+      /* Carrinho de compras */
+      .cart-icon {
+        position: relative;
+        cursor: pointer;
+        margin-left: 20px;
+      }
+
+      .cart-icon i {
+        font-size: 1.5rem;
+        color: var(--light-color);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      .cart-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 350px;
+        background-color: var(--light-color);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        z-index: 1000;
+        display: none;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+
+      .cart-dropdown.active {
+        display: block;
+      }
+
+      .cart-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .cart-item-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-right: 1rem;
+      }
+
+      .cart-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .cart-item-info {
+        flex-grow: 1;
+      }
+
+      .cart-item-title {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.2rem;
+      }
+
+      .cart-item-price {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+      }
+
+      .cart-item-quantity {
+        display: flex;
+        align-items: center;
+        margin-top: 0.5rem;
+      }
+
+      .cart-item-remove {
+        color: var(--error-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-left: 1rem;
+      }
+
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        margin: 1rem 0;
+        padding-top: 1rem;
+        border-top: 2px solid var(--secondary-color);
+      }
+
+      .cart-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .cart-buttons .btn {
+        flex: 1;
+        margin: 0;
+      }
+
+      .empty-cart-message {
+        text-align: center;
+        padding: 2rem 0;
+        color: #666;
+      }
+
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .notification.success {
+        background-color: var(--success-color);
+      }
+
+      .notification.error {
+        background-color: var(--error-color);
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 992px) {
+        .about-content,
+        .contact-content {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-inner {
+          padding: 1rem;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+
+        .logo {
+          font-size: 1.8rem;
+        }
+
+        nav {
+          display: none;
+          width: 100%;
+          margin-top: 1rem;
+          background-color: var(--primary-color);
+          padding: 1rem 0;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav.active {
+          display: block;
+        }
+
+        nav ul {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul li {
+          margin: 0.8rem 0;
+        }
+
+        nav ul li a {
+          padding: 0.5rem 0;
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        section {
+          padding: 3rem 1rem;
+        }
+
+        .mobile-menu-icon {
+          display: block;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .footer-section {
+          min-width: 100%;
+          text-align: center;
+        }
+
+        .social-icons {
+          justify-content: center;
+        }
+
+        .cart-dropdown {
+          width: 300px;
+          right: -100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a href="#home" class="logo">
+          <i class="fas fa-crown logo-icon"></i> Marimbondo Rei
+        </a>
+        <div
+          class="mobile-menu-icon"
+          onclick="toggleMobileMenu()"
+          aria-label="Abrir menu de navegação"
+        >
+          <i class="fas fa-bars"></i>
+        </div>
+        <nav id="navMenu">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#menu">Cardápio</a></li>
+            <li><a href="#contact">Contato</a></li>
+          </ul>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+          <div class="cart-dropdown">
+            <div id="cartItems">
+              <!-- Itens do carrinho serão adicionados aqui -->
+            </div>
+            <div class="cart-total">
+              <span>Total:</span>
+              <span id="cartTotal">R$ 0,00</span>
+            </div>
+            <div class="cart-buttons">
+              <button class="btn" onclick="clearCart()">Limpar</button>
+              <button class="btn" onclick="goToCheckout()">Finalizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-content">
+          <h1>Marimbondo Rei</h1>
+          <p>
+            Confeitaria & Café - Delícias artesanais feitas com amor desde 1995
+          </p>
+          <div>
+            <a href="#menu" class="btn">Ver Cardápio</a>
+            <a href="#contact" class="btn">Fazer Pedido</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about">
+        <div class="container">
+          <h2 class="section-title">Nossa História</h2>
+          <div class="about-content">
+            <div class="about-img">
+              <img
+                src="https://images.unsplash.com/photo-1559620192-032c4bc4674e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                alt="Interior da Confeitaria Marimbondo Rei"
+              />
+            </div>
+            <div class="about-text">
+              <h3>Tradição em doces e cafés especiais</h3>
+              <p>
+                A Marimbondo Rei nasceu da paixão por sabores autênticos e da
+                dedicação em proporcionar momentos doces e inesquecíveis.
+                Localizada na Av. Marechal Deodoro da Fonseca, nossa confeitaria
+                se tornou um ponto de encontro para os amantes de bolos, doces
+                artesanais e cafés de qualidade.
+              </p>
+              <p>
+                Cada receita é preparada com ingredientes selecionados,
+                respeitando as tradições culinárias e adicionando toques
+                especiais que fazem dos nossos produtos verdadeiras obras de
+                arte gastronômicas.
+              </p>
+              <a href="#menu" class="btn">Conheça nosso cardápio</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="menu" class="menu">
+        <div class="container">
+          <h2 class="section-title">Nosso Cardápio</h2>
+          <div class="menu-tabs">
+            <button
+              class="menu-tab active"
+              data-target="bolos"
+              aria-selected="true"
+            >
+              Bolos
+            </button>
+            <button class="menu-tab" data-target="doces" aria-selected="false">
+              Doces
+            </button>
+            <button class="menu-tab" data-target="cafe" aria-selected="false">
+              Café & Salgados
+            </button>
+          </div>
+
+          <div id="bolos" class="menu-items-container active">
+            <div class="cake-sizes">
+              <h3>Tamanhos de Bolos</h3>
+              <table class="size-table">
+                <thead>
+                  <tr>
+                    <th>Tamanho</th>
+                    <th>Serve</th>
+                    <th>Preço</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pequeno</td>
+                    <td>8-10 pessoas</td>
+                    <td>R$ 60,00</td>
+                  </tr>
+                  <tr>
+                    <td>Médio</td>
+                    <td>15-20 pessoas</td>
+                    <td>R$ 90,00</td>
+                  </tr>
+                  <tr>
+                    <td>Grande</td>
+                    <td>25-30 pessoas</td>
+                    <td>R$ 120,00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="product-grid">
+              <div class="product-card" data-id="bolo1">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Bolo de Chocolate Intenso"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Bolo de Chocolate Intenso</h3>
+                  <p class="product-description">
+                    Delicioso bolo de chocolate com cobertura de ganache e
+                    raspas de chocolate belga.
+                  </p>
+                  <div class="product-price">R$ 60,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('bolo1', 'Bolo de Chocolate Intenso', 60.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('bolo1', 'Bolo de Chocolate Intenso', 60.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="bolo2">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Bolo de Baunilha com Frutas"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Bolo de Baunilha com Frutas</h3>
+                  <p class="product-description">
+                    Bolo leve de baunilha com camadas de creme e frutas frescas
+                    da estação.
+                  </p>
+                  <div class="product-price">R$ 65,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('bolo2', 'Bolo de Baunilha com Frutas', 65.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('bolo2', 'Bolo de Baunilha com Frutas', 65.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="bolo3">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1616541823729-00fe0aacd32c?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Bolo Red Velvet"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Bolo Red Velvet</h3>
+                  <p class="product-description">
+                    Tradicional bolo vermelho com recheio e cobertura de cream
+                    cheese.
+                  </p>
+                  <div class="product-price">R$ 70,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('bolo3', 'Bolo Red Velvet', 70.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('bolo3', 'Bolo Red Velvet', 70.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="doces" class="menu-items-container">
+            <div class="product-grid">
+              <div class="product-card" data-id="doce1">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Brigadeiro Gourmet"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Brigadeiro Gourmet</h3>
+                  <p class="product-description">
+                    Brigadeiro artesanal feito com chocolate belga e finalizado
+                    com granulado especial.
+                  </p>
+                  <div class="product-price">R$ 3,50</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('doce1', 'Brigadeiro Gourmet', 3.50)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('doce1', 'Brigadeiro Gourmet', 3.50)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="doce2">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1583529245872-c37075e5defc?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Beijinho de Coco"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Beijinho de Coco</h3>
+                  <p class="product-description">
+                    Docinho de coco fresco ralado na hora, com toque de baunilha
+                    e cravinho.
+                  </p>
+                  <div class="product-price">R$ 3,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('doce2', 'Beijinho de Coco', 3.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('doce2', 'Beijinho de Coco', 3.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="doce3">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1582716401301-b2407dc7563d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Cajuzinho"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Cajuzinho</h3>
+                  <p class="product-description">
+                    Docinho tradicional com amendoim torrado e moído na casa,
+                    com toque de canela.
+                  </p>
+                  <div class="product-price">R$ 3,50</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('doce3', 'Cajuzinho', 3.50)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('doce3', 'Cajuzinho', 3.50)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="cafe" class="menu-items-container">
+            <div class="product-grid">
+              <div class="product-card" data-id="cafe1">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Café Expresso"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Café Expresso</h3>
+                  <p class="product-description">
+                    Café expresso intenso, feito com grãos selecionados e
+                    torrados artesanalmente.
+                  </p>
+                  <div class="product-price">R$ 5,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('cafe1', 'Café Expresso', 5.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('cafe1', 'Café Expresso', 5.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="cafe2">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1534778101976-62847782c213?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Cappuccino"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Cappuccino</h3>
+                  <p class="product-description">
+                    Clássico cappuccino italiano com espuma cremosa e canela
+                    polvilhada.
+                  </p>
+                  <div class="product-price">R$ 8,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('cafe2', 'Cappuccino', 8.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('cafe2', 'Cappuccino', 8.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+
+              <div class="product-card" data-id="salgado1">
+                <div class="product-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1604152135912-04a022e23696?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                    alt="Coxinha de Frango"
+                  />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Coxinha de Frango</h3>
+                  <p class="product-description">
+                    Coxinha crocante com recheio cremoso de frango desfiado e
+                    catupiry.
+                  </p>
+                  <div class="product-price">R$ 6,00</div>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('salgado1', 'Coxinha de Frango', 6.00)"
+                  >
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                  </button>
+                  <button
+                    class="buy-now-btn"
+                    onclick="buyNow('salgado1', 'Coxinha de Frango', 6.00)"
+                  >
+                    Comprar Agora
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Marimbondo Rei</h3>
+          <p>
+            Confeitaria & Café com tradição desde 1995, oferecendo produtos
+            artesanais de alta qualidade.
+          </p>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="WhatsApp"
+              ><i class="fab fa-whatsapp"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Links Rápidos</h3>
+          <a href="#home">Home</a>
+          <a href="#about">Sobre Nós</a>
+          <a href="#menu">Cardápio</a>
+          <a href="#contact">Contato</a>
+        </div>
+        <div class="footer-section">
+          <h3>Horário de Funcionamento</h3>
+          <p>Segunda a Sábado: 9h às 19h</p>
+          <p>Domingo: 9h às 14h</p>
+          <p>Feriados: Consulte-nos</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Marimbondo Rei - Todos os direitos reservados</p>
+      </div>
+    </footer>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+      // Variáveis globais
+      let cart = [];
+      let cartCount = 0;
+      let cartTotal = 0;
+
+      // Funções de manipulação do carrinho
+      function addToCart(id, name, price) {
+        // Verifica se o produto já está no carrinho
+        const existingItem = cart.find((item) => item.id === id);
+
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({
+            id: id,
+            name: name,
+            price: price,
+            quantity: 1,
+            image: document.querySelector(
+              `.product-card[data-id="${id}"] .product-image img`
+            ).src,
+          });
+        }
+
+        updateCart();
+        showNotification(`${name} adicionado ao carrinho!`, "success");
+      }
+
+      function removeFromCart(id) {
+        cart = cart.filter((item) => item.id !== id);
+        updateCart();
+        showNotification("Item removido do carrinho!", "success");
+      }
+
+      function updateCartQuantity(id, quantity) {
+        const item = cart.find((item) => item.id === id);
+        if (item) {
+          item.quantity = quantity;
+          if (item.quantity <= 0) {
+            removeFromCart(id);
+          } else {
+            updateCart();
+          }
+        }
+      }
+
+      function clearCart() {
+        cart = [];
+        updateCart();
+        showNotification("Carrinho limpo!", "success");
+      }
+
+      function updateCart() {
+        const cartItemsElement = document.getElementById("cartItems");
+        const cartCountElement = document.querySelector(".cart-count");
+        const cartTotalElement = document.getElementById("cartTotal");
+
+        // Atualiza o contador do carrinho
+        cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCountElement.textContent = cartCount;
+
+        // Atualiza o total do carrinho
+        cartTotal = cart.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        );
+        cartTotalElement.textContent = `R$ ${cartTotal.toFixed(2)}`;
+
+        // Atualiza os itens do carrinho
+        if (cart.length === 0) {
+          cartItemsElement.innerHTML =
+            '<div class="empty-cart-message">Seu carrinho está vazio</div>';
+        } else {
+          cartItemsElement.innerHTML = "";
+          cart.forEach((item) => {
+            const cartItemElement = document.createElement("div");
+            cartItemElement.className = "cart-item";
+            cartItemElement.innerHTML = `
+                        <div class="cart-item-img">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">R$ ${item.price.toFixed(
+                              2
+                            )}</div>
+                            <div class="cart-item-quantity">
+                                Qtd: ${item.quantity}
+                            </div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart('${
+                          item.id
+                        }')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+            cartItemsElement.appendChild(cartItemElement);
+          });
+        }
+
+        // Salva o carrinho no localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      function toggleCart() {
+        const cartDropdown = document.querySelector(".cart-dropdown");
+        cartDropdown.classList.toggle("active");
+      }
+
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      function buyNow(id, name, price) {
+        // Adiciona o item ao carrinho
+        addToCart(id, name, price);
+
+        // Redireciona para a página de checkout
+        goToCheckout();
+      }
+
+      function goToCheckout() {
+        // Salva o carrinho no localStorage antes de redirecionar
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Redireciona para a página de checkout
+        window.location.href = "checkout.html";
+      }
+
+      // Funções de navegação
+      function toggleMobileMenu() {
+        const navMenu = document.getElementById("navMenu");
+        navMenu.classList.toggle("active");
+      }
+
+      // Funções para as abas do menu
+      document.addEventListener("DOMContentLoaded", function () {
+        // Carrega o carrinho do localStorage
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+          updateCart();
+        }
+
+        // Configura as abas do menu
+        const menuTabs = document.querySelectorAll(".menu-tab");
+        menuTabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // Remove a classe active de todas as abas
+            menuTabs.forEach((t) => {
+              t.classList.remove("active");
+              t.setAttribute("aria-selected", "false");
+            });
+
+            // Adiciona a classe active na aba clicada
+            this.classList.add("active");
+            this.setAttribute("aria-selected", "true");
+
+            // Esconde todos os containers de itens
+            const menuContainers = document.querySelectorAll(
+              ".menu-items-container"
+            );
+            menuContainers.forEach((container) => {
+              container.classList.remove("active");
+            });
+
+            // Mostra o container correspondente à aba clicada
+            const targetId = this.getAttribute("data-target");
+            document.getElementById(targetId).classList.add("active");
+          });
+        });
+
+        // Configura o formulário de contato
+        const contactForm = document.getElementById("contactForm");
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            showNotification("Mensagem enviada com sucesso!", "success");
+            contactForm.reset();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
